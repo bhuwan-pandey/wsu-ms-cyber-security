@@ -1,28 +1,16 @@
-numberOfFlows = 6
-numberOfPackets = 13
-Packet arrTime 0.0 flow id 1 w 0.5 packet length 1.0
-Packet arrTime 0.0 flow id 2 w 0.1 packet length 1.0
-Packet arrTime 0.0 flow id 3 w 0.1 packet length 1.0
-Packet arrTime 0.0 flow id 4 w 0.1 packet length 1.0
-Packet arrTime 0.0 flow id 5 w 0.1 packet length 1.0
-Packet arrTime 0.0 flow id 6 w 0.1 packet length 1.0
-Packet arrTime 1.0 flow id 1 w 0.5 packet length 1.0
-Packet arrTime 2.0 flow id 1 w 0.5 packet length 1.0
-Packet arrTime 3.0 flow id 1 w 0.5 packet length 1.0
-Packet arrTime 4.0 flow id 1 w 0.5 packet length 1.0
-Packet arrTime 5.0 flow id 1 w 0.5 packet length 1.0
-Packet arrTime 6.0 flow id 1 w 0.5 packet length 1.0
-Packet arrTime 7.0 flow id 1 w 0.5 packet length 1.0
-Event{type=pgpsDeparture, t=2.0, p=Packet{flowId=1, arrTime=0.0, length=1.0, virtualStarTime=0.0, virtualFinishTime=2.0}}
-Event{type=pgpsDeparture, t=4.0, p=Packet{flowId=1, arrTime=1.0, length=1.0, virtualStarTime=2.0, virtualFinishTime=4.0}}
-Event{type=pgpsDeparture, t=6.0, p=Packet{flowId=1, arrTime=2.0, length=1.0, virtualStarTime=4.0, virtualFinishTime=6.0}}
-Event{type=pgpsDeparture, t=8.0, p=Packet{flowId=1, arrTime=3.0, length=1.0, virtualStarTime=6.0, virtualFinishTime=8.0}}
-Event{type=pgpsDeparture, t=10.0, p=Packet{flowId=1, arrTime=4.0, length=1.0, virtualStarTime=8.0, virtualFinishTime=10.0}}
-Event{type=pgpsDeparture, t=11.0, p=Packet{flowId=1, arrTime=5.0, length=1.0, virtualStarTime=10.0, virtualFinishTime=12.0}}
-Event{type=pgpsDeparture, t=12.0, p=Packet{flowId=1, arrTime=6.0, length=1.0, virtualStarTime=12.0, virtualFinishTime=14.0}}
-Event{type=pgpsDeparture, t=13.0, p=Packet{flowId=1, arrTime=7.0, length=1.0, virtualStarTime=14.0, virtualFinishTime=16.0}}
-Event{type=pgpsDeparture, t=10.0, p=Packet{flowId=2, arrTime=0.0, length=1.0, virtualStarTime=0.0, virtualFinishTime=10.0}}
-Event{type=pgpsDeparture, t=10.0, p=Packet{flowId=3, arrTime=0.0, length=1.0, virtualStarTime=0.0, virtualFinishTime=10.0}}
-Event{type=pgpsDeparture, t=10.0, p=Packet{flowId=4, arrTime=0.0, length=1.0, virtualStarTime=0.0, virtualFinishTime=10.0}}
-Event{type=pgpsDeparture, t=10.0, p=Packet{flowId=5, arrTime=0.0, length=1.0, virtualStarTime=0.0, virtualFinishTime=10.0}}
-Event{type=pgpsDeparture, t=10.0, p=Packet{flowId=6, arrTime=0.0, length=1.0, virtualStarTime=0.0, virtualFinishTime=10.0}}
+numberOfFlows = 2
+numberOfPackets = 7
+Packet arrTime 0.0 flow id 2 w 0.7 packet length 3.0
+Packet arrTime 1.0 flow id 1 w 0.3 packet length 1.0
+Packet arrTime 2.0 flow id 1 w 0.3 packet length 1.0
+Packet arrTime 3.0 flow id 1 w 0.3 packet length 2.0
+Packet arrTime 5.0 flow id 2 w 0.7 packet length 2.0
+Packet arrTime 9.0 flow id 2 w 0.7 packet length 2.0
+Packet arrTime 11.0 flow id 1 w 0.3 packet length 2.0
+Event{type=pgpsDeparture, t=4.0, p=Packet{flowId=2, arrTime=0.0, length=3.0, virtualStarTime=0.0, virtualFinishTime=4.5}}
+Event{type=pgpsDeparture, t=4.0, p=Packet{flowId=1, arrTime=1.0, length=1.0, virtualStarTime=1.5, virtualFinishTime=4.5}}
+Event{type=pgpsDeparture, t=5.0, p=Packet{flowId=1, arrTime=2.0, length=1.0, virtualStarTime=4.5, virtualFinishTime=7.5}}
+Event{type=pgpsDeparture, t=8.0, p=Packet{flowId=2, arrTime=5.0, length=2.0, virtualStarTime=7.5, virtualFinishTime=10.5}}
+Event{type=pgpsDeparture, t=9.0, p=Packet{flowId=1, arrTime=3.0, length=2.0, virtualStarTime=7.5, virtualFinishTime=13.5}}
+Event{type=pgpsDeparture, t=11.0, p=Packet{flowId=2, arrTime=9.0, length=2.0, virtualStarTime=13.5, virtualFinishTime=16.5}}
+Event{type=pgpsDeparture, t=13.0, p=Packet{flowId=1, arrTime=11.0, length=2.0, virtualStarTime=16.5, virtualFinishTime=22.5}}
