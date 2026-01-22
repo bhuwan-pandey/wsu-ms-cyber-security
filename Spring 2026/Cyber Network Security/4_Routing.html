@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>4_Routing.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+
+<style>
+/* === Responsive Enhancements (added) === */
+html { box-sizing: border-box; }
+*, *::before, *::after { box-sizing: inherit; }
+
+body {
+  margin: 0;
+  padding: 0 16px;
+  max-width: 100%;
+  line-height: 1.6;
+}
+
+/* Images: scale down to container width */
+img, svg, canvas, video {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Tables: allow horizontal scrolling on narrow screens */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  display: block;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+table th, table td {
+  padding: 6px 10px;
+  border: 1px solid rgba(0,0,0,0.15);
+  text-align: left;
+  word-break: break-word;
+}
+
+/* Code blocks: wrap long lines and allow scroll if needed */
+pre, code, pre code {
+  max-width: 100%;
+  white-space: pre-wrap;      /* wrap on small screens */
+  word-wrap: break-word;
+  overflow-x: auto;           /* still allow scroll if needed */
+}
+
+/* Mermaid containers: never overflow the viewport */
+.mermaid {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+/* Headings: improve readability on small devices */
+h1, h2, h3 { line-height: 1.3; }
+
+/* Small-screen tweaks */
+@media (max-width: 768px) {
+  body { padding: 0 12px; }
+  table th, table td { padding: 6px 8px; }
+  pre { padding: 12px; }
+}
+</style>
+
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="ip-protocols-and-routers">IP Protocols and Routers</h1>
+<h1 id="by-dr-junjie-zhang">By <a href="jzhang369.github.io">Dr. Junjie Zhang</a></h1>
+<hr>
+<h2 id="1-internet-protocol-ip-header">1. Internet Protocol (IP) Header</h2>
+<p>The Internet Protocol (IP) is the foundation of packet-switched networks.  An <strong>IP header</strong> contains essential information that allows packets to travel from a source host to a destination host <strong>across</strong> multiple networks.</p>
+<h3 id="ipv4-header-structure">IPv4 Header Structure</h3>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/IPv4_Packet-en.svg/500px-IPv4_Packet-en.svg.png" alt="IP Header"></p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Size (bits)</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Version</td>
+<td>4</td>
+<td>IPv4 (4) or IPv6 (6).</td>
+</tr>
+<tr>
+<td>IHL (Header Length)</td>
+<td>4</td>
+<td>Length of the header in 32-bit words.</td>
+</tr>
+<tr>
+<td>Type of Service (ToS)</td>
+<td>8</td>
+<td>Packet priority / QoS.</td>
+</tr>
+<tr>
+<td>Total Length</td>
+<td>16</td>
+<td>Entire packet length (header + data).</td>
+</tr>
+<tr>
+<td>Identification</td>
+<td>16</td>
+<td>Unique ID for fragmentation.</td>
+</tr>
+<tr>
+<td>Flags</td>
+<td>3</td>
+<td>Control fragmentation.</td>
+</tr>
+<tr>
+<td>Fragment Offset</td>
+<td>13</td>
+<td>Position of fragment in original datagram.</td>
+</tr>
+<tr>
+<td>Time To Live (TTL)</td>
+<td>8</td>
+<td>Limits packet lifetime. Decremented by each router.</td>
+</tr>
+<tr>
+<td>Protocol</td>
+<td>8</td>
+<td>Encapsulated protocol (TCP=6, UDP=17, ICMP=1).</td>
+</tr>
+<tr>
+<td>Header Checksum</td>
+<td>16</td>
+<td>Error-checking for header.</td>
+</tr>
+<tr>
+<td>Source IP Address</td>
+<td>32</td>
+<td>Sender’s IP address.</td>
+</tr>
+<tr>
+<td>Destination IP Address</td>
+<td>32</td>
+<td>Receiver’s IP address.</td>
+</tr>
+<tr>
+<td>Options (optional)</td>
+<td>variable</td>
+<td>Rarely used.</td>
+</tr>
+<tr>
+<td>Data</td>
+<td>variable</td>
+<td>Payload.</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="2-nic-configuration-and-gateway">2. NIC Configuration and Gateway</h2>
+<p>Let us first revisit the typical configuration of a <strong>Network Interface Card (NIC)</strong>, as discussed in the section on <em>Local Area Network and Switches</em>. The <code>ifconfig</code> command shows the details of a host’s NIC:</p>
+<pre class="hljs"><code><div>$ ifconfig
+wlp0s20f3: flags=4163&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;  mtu 1500
+        inet 192.168.0.175  netmask 255.255.255.0  broadcast 192.168.0.255
+        inet6 fe80::a286:1d8b:6070:5cc4  prefixlen 64  scopeid 0x20&lt;link&gt;
+        ether 6c:6a:77:d8:70:5c  txqueuelen 1000  (Ethernet)
+        RX packets 202255  bytes 207443658 (207.4 MB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 80927  bytes 33460286 (33.4 MB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+</div></code></pre>
+<p>From this output we see:</p>
+<ul>
+<li><strong>IP address</strong>: <code>192.168.0.175</code></li>
+<li><strong>Netmask</strong>: <code>255.255.255.0</code> → indicates the <code>/24</code> subnet (<code>192.168.0.0/24</code>).</li>
+<li><strong>MAC address</strong>: <code>6c:6a:77:d8:70:5c</code></li>
+</ul>
+<p>With just the IP address, netmask, and MAC address, this node can communicate directly with any other device <strong>inside the same LAN</strong> (i.e., any host in the <code>192.168.0.0/24</code> network).</p>
+<p>However, to reach a node <strong>outside this LAN</strong>, for example, a server on another LAN, the host must forward its packets to a <strong>gateway</strong>. The gateway is typically a router that connects the LAN to other networks.</p>
+<p>We can identify the gateway using the <code>ip route show</code> command:</p>
+<pre class="hljs"><code><div>$ ip route show
+default via 192.168.0.1 dev wlp0s20f3 proto dhcp metric 600 
+</div></code></pre>
+<p>The keyword <strong><code>default</code></strong> indicates the route taken when the destination is not part of the local network. Here, <code>192.168.0.1</code> is the IP address of the <strong>gateway</strong>. Packets destined for networks outside <code>192.168.0.0/24</code> are forwarded to this gateway, which is the router responsible for relaying them toward their final destination.</p>
+<hr>
+<h2 id="3-deciding-how-to-send-packets">3. Deciding How to Send Packets</h2>
+<p><img class="emoji" alt="star" src="data:image/png;base64,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" /> <strong>General Rules</strong></p>
+<ul>
+<li>If the destination is in the <strong>same subnet</strong>, send the packet directly using the destination’s MAC address.</li>
+<li>If the destination is in a <strong>different subnet</strong>, forward the packet to the <strong>gateway’s MAC address</strong>; the gateway (router) will then relay it toward its destination.</li>
+</ul>
+<p>The following Python-like pseudocode illustrates this decision process:</p>
+<pre class="hljs"><code><div><span class="hljs-comment"># The Python-like Pseudo Code</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">send_ip_packet</span><span class="hljs-params">(src_ip, dst_ip, netmask, gateway_ip, arp_cache)</span>:</span>
+    <span class="hljs-string">"""
+    src_ip      : Source host's IP
+    dst_ip      : Destination host's IP
+    netmask     : Subnet mask of the source host
+    gateway_ip  : Default gateway IP
+    arp_cache   : Mapping of IP -&gt; MAC (from ARP cache)
+    """</span>
+
+    <span class="hljs-comment"># Step 1. Compute network prefix of source and destination</span>
+    src_network = src_ip &amp; netmask
+    dst_network = dst_ip &amp; netmask
+
+    <span class="hljs-comment"># Step 2. Check if destination is in the same LAN</span>
+    <span class="hljs-keyword">if</span> src_network == dst_network:
+        print(<span class="hljs-string">"[+] Destination is in the same LAN"</span>)
+        dst_mac = arp_cache.lookup(dst_ip)  <span class="hljs-comment"># get MAC of destination host</span>
+        <span class="hljs-keyword">if</span> dst_mac <span class="hljs-keyword">is</span> <span class="hljs-literal">None</span>:
+            dst_mac = arp_request(dst_ip)   <span class="hljs-comment"># broadcast ARP request</span>
+    <span class="hljs-keyword">else</span>:
+        print(<span class="hljs-string">"[+] Destination is outside LAN, forward to gateway"</span>)
+        dst_mac = arp_cache.lookup(gateway_ip)  <span class="hljs-comment"># MAC of gateway</span>
+        <span class="hljs-keyword">if</span> dst_mac <span class="hljs-keyword">is</span> <span class="hljs-literal">None</span>:
+            dst_mac = arp_request(gateway_ip)   <span class="hljs-comment"># ARP request for gateway</span>
+
+    <span class="hljs-comment"># Step 3. Build Ethernet frame</span>
+    ether_frame = Ether(
+        src_mac = arp_cache.lookup(src_ip),  <span class="hljs-comment"># my MAC</span>
+        dst_mac = dst_mac
+    ) / IP(src=src_ip, dst=dst_ip) / payload
+
+    <span class="hljs-comment"># Step 4. Send frame</span>
+    send_frame(ether_frame)
+
+</div></code></pre>
+<p>In the diagram below, one router with two interfaces connects two separate network segments.</p>
+<pre><code class="language-mermaid"><div class="mermaid">flowchart LR
+    subgraph LAN1 [LAN 192.168.1.0/24]
+        SW1[Switch1]
+        A[PC A<br/>IP: 192.168.1.10<br/>MAC: AA:AA:AA:AA:AA:AA<br/>Netmask: 255.255.255.0<br/>Gateway: 192.168.1.1]
+        B[PC B<br/>IP: 192.168.1.20<br/>MAC: BB:BB:BB:BB:BB:BB<br/>Gateway: 192.168.1.1]
+
+        A <--> SW1
+        B <--> SW1
+    end
+
+    subgraph LAN2 [LAN 10.0.0.0/24]
+        SW2[Switch2]
+        C[PC C<br/>IP: 10.0.0.10<br/>MAC: CC:CC:CC:CC:CC:CC<br/>Netmask: 255.255.0.0<br/>Gateway: 10.0.0.1]
+        D[PC D<br/>IP: 10.0.0.20<br/>MAC: DD:DD:DD:DD:DD:DD<br/>Netmask: 255.255.0.0<br/>Gateway: 10.0.0.1]
+
+        C <--> SW2
+        D <--> SW2
+    end
+
+    subgraph Router [Router]
+        R0[eth0<br/>IP: 192.168.1.1<br/>MAC: AA:BB:AA:BB:AA:BB<br/>Netmask: 255.255.255.0]
+        R1[eth1<br/>IP: 10.0.0.1<br/>MAC: CC:DD:CC:DD:CC:DD<br/>Netmask: 255.255.0.0]
+    end
+
+    SW1 <--> R0
+    SW2 <--> R1
+</div></code></pre>
+<p><img class="emoji" alt="question" src="data:image/png;base64,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" /> If <code>PC A</code> (192.168.1.10) needs to send a packet to <code>PC C</code> (10.0.0.10), how does it determine the next hop, and what information will be included in the packet?</p>
+<ul>
+<li>
+<p><strong>Where is the packet sent?</strong></p>
+<ul>
+<li>Since <code>(192.168.1.10 ∧ 255.255.255.0) ≠ (10.0.0.10 ∧ 255.255.0.0)</code>, the two hosts are on different networks.</li>
+<li>Therefore, <code>PC A</code> must forward the packet to its configured <strong>gateway</strong>.</li>
+</ul>
+</li>
+<li>
+<p><strong>What does the packet look like?</strong></p>
+<ul>
+<li>Pay special attention to the difference between the <strong>Destination MAC</strong> (that of the gateway) and the <strong>Destination IP</strong> (the final recipient, <code>10.0.0.10</code>).</li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code><div>+-----------------------------------------------------------+
+|                  Ethernet Header (14 bytes)               |
++-------------------------+----------------+----------------+
+| Destination MAC         | Source MAC     | Type           |
+| AB:AB:AB:AB:AB:AB       | AA:AA:AA:AA:AA:AA | 0x0800 (IPv4)|
++-----------------------------------------------------------+
+|                  IP Header (20 bytes)                     |
++------------------+------------------+---------------------+
+| Source IP        | Destination IP   | Other Fields        |
+| 192.168.1.10     | 10.0.0.10        | Ver, IHL, TTL, ...  |
++-----------------------------------------------------------+
+|                       Payload/Data                        |
++-----------------------------------------------------------+
+
+</div></code></pre>
+<h2 id="4-introduction-to-routing-and-routers">4. Introduction to Routing and Routers</h2>
+<p><img class="emoji" alt="question" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAGdklEQVR42u2aeUxUVxTGX/9QZoZ33xtWWVQEsQiISzDVKi6p4lLFldIE06Sa1DQiGpq0jU3tEqupWrA2arS1oKlLtWqFYXGLaBUERECEigIz7CBSi1iXtmNOv/v6hhiqpv2jabnOSX55cx93JnzfOffNvQckZzjDGc5whjP+/aiPinJrmTZt4o2YmGU3FixY3xYbm9oeG7u/feHCr9vnz1/bPnv24pbo6NGY+pw4oqdODWqdOXP1z/HxxXeWLu38dcUKsicmkj0piewrV5I9IYFftfFD3H+wfDl1LVrU1DZjRopt8mSfXiu8YcqUeTfmzSu7v2QJ2TkLF9LdqCjqDA+nNn9/anF3pxZVpRZF4VdtfGPAALo9fDj9Nn062ePjqSsujpqmTk2tDg526VXimwICiu9FR5N9zhzqioigVg8PqjeZqM7VleohuMFspgYIbsB9Bxhr9+sY0+a2eXrS/dGjiWJiqGPy5M7GyMiIXmPAD6pabIWoZmS2TpapHuIaIeifwN9jgxkdvr5E48bRzTFjyBoSEtIrDDisqq/mI5taZiGG0wSaQQto7QZj/WcNT8CKz2n19ib7yJHUGBp6s1cYsEOS+pzEL259RGQjuA5DLiOzRW5udAEU43UlqPPyomZH5h9DLT7rJz8/uj10KFn9/df0ChMsqpp1BeKuQ8BZiD0IEV8xRl8w1pEiyxXJjOVtYuzaFsZ+34elko+5VhjBs17XAyuohXldAQHU4Otr7y3LIPYQhO1UFPpMlk9tlOW4tSaT7+PmbjCZXv5cliuPwaQaCOWibT2oBa0+PtQMKtzcYv73BqRJknmzLJ9cJ8th0t+M7Ypy/ByqBRn/C7XAhgqp9fbmy2iTJGLwZ0e6qj6scmS9B1YOTLjo5pYjiRp4dhwqxzLggqt7UAuugfPu7heFNeC02bz6Mgyo4d8aPagBlQBzzghrwAWz+cNKbgC43oNqUApyzOY0YQ0oM5szbP36aaVeBbEOrukmoPwJz4k3hTWgytv7QSO2v7wKrjrQDaiA+Gy+pzAa/YUUX96v3xs4SBGvgAoI/tGBbgDfPe5TlEJJ1LgaFHTn1qBBVI5MX4HgSp2rgI/TzWbarSgzxVz7QUGpHSEhZOMbHWQaFaBRqVfAab6VVpQiIcWXBgfPbUCj5ObAgVQK8ThDdFMJCsEuVaWtRuMA4cSXBAYG1ISF0V1kvwziyyD2sk4FuAT2QzzOCsvELP2hQ5tvwwBe5iVmMzdAoxyUgiMQv0mWDwgp/tKQIRl3hg2jWpzwLkI8BGuU6Vj+FH9JSPEFAQEJjch8MxqhRRBaAsGcUr38T8AQnCbbP5Ikg3Dic/38PCsHD6aOwEAqhFCs825KAW+gfMkYpbi4BEsiRqGfX0YzxJd7emoGoDWmUQIKwDeKQsmurq+LWfpeXkMu9+9PNdju8sZpEQQ7KNbXPUr/qCRq5Lm7p1b5+9MlfWuL73iNi+AcxmmM0XpJYuIedz087lX4+GjZL4BgB0UgE/e2yvJmYcUfV9XIfP6ww9rP461xnULAxwdR/lsMhgBhDchR1aW8zLkJ+bg6KAC5yP5eRbFJIgcaGRu4AXkw4DyuDvLBKRiAo+4eoQ04wth2ZFor93OPkKcb8K2ifCy0Ad8xlsKPtQXgggN9fAYcYuxtoQ1IVZQ1gHY/gb2MJQttwKcGw8RVBsPedwyGVM67Ovrrvcmy/IrkDGc8O3EwPFx+5kRbRoyYnzdhQp4tJuaX+rg4qpk169bZqKhMS0TEi8KLPxEWlt48fjzdmjSJrKNGUQ26QXWRkdSJcc3YsXQ8NHSNsOKz+vffaUMHqBodIIvRSOkGg8ZRkGMykdYfQGM0y9f3NeHEZ6hqYC7O/yUgQ5YpW1HomKp2k80YZQHeJzjm5dUl4hZ47Vmc/09iy5sFwTmPIQum5OKMcAockeWXhDJgP2OZDqHZTwH/I6QZtI+xt4QyIE1RTqQriiYy6ylkg8OYlyrLHwhlwDbGdh3QDch8CtlgD2O0zdV1sVAGbDSZ5vI2t0XPtKUnuvjvYRJaYpQs4t8APzGZWnYx1r0MMkGGfnWMd0A85mVKIsaqvn3D3jeZaDtE8nVuAZn6FX0C3gqnVSZTe5IkGSVRI8HF5fkko7GEG7HO1ZXWg7UAwmmF0WhZorfDhY8VLi4zlhsM6xKNxm2JBsN7iX36vCA5wxnOcIYznPGfxB/T0EJntmJeNgAAAABJRU5ErkJggg==" /> Now, this packet arrives at one of the router’s interfaces. What does the router do next?</p>
+<p>The router consults its <strong>routing table</strong> to determine how to forward the packet. The routing table can be thought of as a set of rules or entries, each indicating how to reach a particular destination network. Each entry typically contains:</p>
+<ul>
+<li><strong>Destination network</strong>: The network prefix to match (e.g., <code>10.0.0.0/24</code>).</li>
+<li><strong>Next hop IP</strong>: The IP address of the next router (if the destination is not directly connected).</li>
+<li><strong>Interface</strong>: The local router interface through which the packet should be forwarded.</li>
+<li><strong>Flags/Notes</strong>: For example, whether the route is directly connected.</li>
+</ul>
+<p>For the example network presented above, its routing table might look like this:</p>
+<table>
+<thead>
+<tr>
+<th>Destination Network</th>
+<th>Next Hop IP</th>
+<th>Outgoing Interface</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>192.168.1.0/24</td>
+<td>—</td>
+<td>eth0</td>
+<td>Directly connected</td>
+</tr>
+<tr>
+<td>10.0.0.0/16</td>
+<td>—</td>
+<td>eth1</td>
+<td>Directly connected</td>
+</tr>
+</tbody>
+</table>
+<p>Both LANs are directly connected to this router.</p>
+<p><strong>How the router decides:</strong></p>
+<ol>
+<li>The router checks the destination IP in the incoming packet.</li>
+<li>It searches its routing table for the <strong>longest prefix match</strong> with that IP.</li>
+<li>It then forwards the packet out through the corresponding interface, updating the Ethernet header (new source/destination MACs).</li>
+</ol>
+<p><img class="emoji" alt="question" src="data:image/png;base64,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" /> Now, let's go back to the example and explore a few questions.</p>
+<ul>
+<li>For the packet illustrated in the previous section, where does this router forward it to?
+<ul>
+<li><code>eth1</code></li>
+</ul>
+</li>
+<li>What does the packet look like?
+<ul>
+<li>Pay attention to <code>Destination MAC</code> and <code>Source MAC</code></li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code><div>+-----------------------------------------------------------+
+|                  Ethernet Header (14 bytes)               |
++-------------------------+----------------+----------------+
+| Destination MAC         | Source MAC     | Type           |
+| CC:CC:CC:CC:CC:CC       | CD:CD:CD:CD:CD:CD | 0x0800 (IPv4)|
++-----------------------------------------------------------+
+|                  IP Header (20 bytes)                     |
++------------------+------------------+---------------------+
+| Source IP        | Destination IP   | Other Fields        |
+| 192.168.1.10     | 10.0.0.10        | Ver, IHL, TTL, ...  |
++-----------------------------------------------------------+
+|                       Payload/Data                        |
++-----------------------------------------------------------+
+
+</div></code></pre>
+<p>Demo: run a GNS3 example.</p>
+<h2 id="5-routing---slightly-more-complex-examples">5. Routing - Slightly More Complex Examples</h2>
+<h3 id="three-networks-with-a-bus-like-topology">Three Networks with a Bus-Like Topology</h3>
+<p>Router with 3 interfaces:</p>
+<ul>
+<li><code>192.168.1.1/24</code></li>
+<li><code>10.0.0.1/16</code></li>
+<li><code>172.16.0.1/24</code></li>
+</ul>
+<p>Router maintains a routing table to forward packets across these 3 networks.</p>
+<pre><code class="language-mermaid"><div class="mermaid">flowchart LR
+    subgraph LAN1 [LAN 192.168.1.0/24]
+        SW1[Switch1]
+        A[PC A<br/>IP: 192.168.1.10<br/>MAC: AA:AA:AA:AA:AA:AA<br/>Netmask: 255.255.255.0<br/>Gateway: 192.168.1.1]
+        B[PC B<br/>IP: 192.168.1.20<br/>MAC: BB:BB:BB:BB:BB:BB<br/>Gateway: 192.168.1.1]
+
+        A <--> SW1
+        B <--> SW1
+    end
+
+    subgraph LAN2 [LAN 10.0.0.0/24]
+        SW2[Switch2]
+        C[PC C<br/>IP: 10.0.0.10<br/>MAC: CC:CC:CC:CC:CC:CC<br/>Netmask: 255.255.0.0<br/>Gateway: 10.0.0.1]
+        D[PC D<br/>IP: 10.0.0.20<br/>MAC: DD:DD:DD:DD:DD:DD<br/>Netmask: 255.255.0.0<br/>Gateway: 10.0.0.1]
+
+        C <--> SW2
+        D <--> SW2
+    end
+
+    subgraph LAN3 [LAN 172.16.0.0/24]
+        SW3[Switch3]
+        E[PC E<br/>IP: 172.16.0.10<br/>MAC: EE:EE:EE:EE:EE:EE<br/>Netmask: 255.255.255.0<br/>Gateway: 172.16.0.1]
+        F[PC F<br/>IP: 172.16.0.20<br/>MAC: FF:FF:FF:FF:FF:FF<br/>Netmask: 255.255.255.0<br/>Gateway: 172.16.0.1]
+
+        E <--> SW3
+        F <--> SW3
+    end
+
+    subgraph Router1 [Router1]
+        R0[eth0<br/>IP: 192.168.1.1<br/>MAC: AA:BB:AA:BB:AA:BB<br/>Netmask: 255.255.255.0]
+        R1[eth1<br/>IP: 10.0.0.1<br/>MAC: CC:DD:CC:DD:CC:DD<br/>Netmask: 255.255.0.0]
+    end
+
+    subgraph Router2 [Router2]
+        R2[eth0<br/>IP: 10.0.0.2<br/>MAC: DD:CC:DD:CC:DD:CC<br/>Netmask: 255.255.0.0]
+        R3[eth1<br/>IP: 172.16.0.1<br/>MAC: EE:FF:EE:FF:EE:FF<br/>Netmask: 255.255.255.0]
+    end
+
+    SW1 <--> R0
+    SW2 <--> R1
+    SW2 <--> R2
+    SW3 <--> R3
+</div></code></pre>
+<h4 id="routing-tables-for-the-network">Routing Tables for the Network</h4>
+<p><strong>Router1</strong> (interfaces: 192.168.1.1/24 on eth0, 10.0.0.1/16 on eth1)</p>
+<table>
+<thead>
+<tr>
+<th>Destination</th>
+<th>Next Hop</th>
+<th>Outgoing If</th>
+<th>Type/Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>192.168.1.0/24</td>
+<td>—</td>
+<td>eth0</td>
+<td>Connected</td>
+</tr>
+<tr>
+<td>10.0.0.0/16</td>
+<td>—</td>
+<td>eth1</td>
+<td>Connected</td>
+</tr>
+<tr>
+<td>172.16.0.0/24</td>
+<td>10.0.0.2</td>
+<td>eth1</td>
+<td>Static (via R2)</td>
+</tr>
+<tr>
+<td>0.0.0.0/0 <em>(opt.)</em></td>
+<td>10.0.0.2</td>
+<td>eth1</td>
+<td>Default (optional)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Router2</strong> (interfaces: 10.0.0.2/16 on eth0, 172.16.0.1/24 on eth1)</p>
+<table>
+<thead>
+<tr>
+<th>Destination</th>
+<th>Next Hop</th>
+<th>Outgoing If</th>
+<th>Type/Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10.0.0.0/16</td>
+<td>—</td>
+<td>eth0</td>
+<td>Connected</td>
+</tr>
+<tr>
+<td>172.16.0.0/24</td>
+<td>—</td>
+<td>eth1</td>
+<td>Connected</td>
+</tr>
+<tr>
+<td>192.168.1.0/24</td>
+<td>10.0.0.1</td>
+<td>eth0</td>
+<td>Static (via R1)</td>
+</tr>
+<tr>
+<td>0.0.0.0/0 <em>(opt.)</em></td>
+<td>10.0.0.1</td>
+<td>eth0</td>
+<td>Default (optional)</td>
+</tr>
+</tbody>
+</table>
+<p><img class="emoji" alt="star" src="data:image/png;base64,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" /> run a GNS3 demo.</p>
+<p>We can also explore the following alternative scenarios:</p>
+<ul>
+<li>Scenario 1 - Each LAN has one or multiple nodes</li>
+<li>Scenario 2 - Remove all nodes under LAN2.</li>
+<li>Scenario 3 - Remove the second switch and use a cable to directly connect <code>Router 1</code> and <code>Router 2</code>.</li>
+</ul>
+<hr>
+<h3 id="more-typical-router-based-network-topologies">More Typical Router-Based Network Topologies</h3>
+<p>Here are a few common router-based network topologies</p>
+<ul>
+<li><strong>Star Topology (Centralized Router)</strong></li>
+<li><strong>Bus-Like Topology (Chained Routers)</strong></li>
+<li><strong>Mesh Topology</strong></li>
+<li><strong>Hybrid Topology (Triangle Example)</strong></li>
+</ul>
+<hr>
+<h3 id="6-practical-tools-and-issues">6. Practical Tools and Issues</h3>
+<h3 id="traceroute">Traceroute</h3>
+<p><strong>TTL (Time To Live)</strong> is an <strong>8-bit field</strong> in the IP header. Its purpose is to <strong>limit the lifetime of a packet</strong> so it doesn’t circulate endlessly in the network due to routing loops or misconfigurations.</p>
+<p>How TTL Works</p>
+<ol>
+<li>When a host creates an IP packet, it sets an <strong>initial TTL value</strong> (commonly 64, 128, or 255 depending on the operating system).</li>
+<li>Each time the packet passes through a <strong>router (hop)</strong>, the router <strong>decrements TTL by 1</strong>.</li>
+<li>If TTL reaches <strong>0</strong>, the packet is <strong>discarded</strong>, and the router usually sends back an <strong>ICMP Time Exceeded</strong> message to the sender.</li>
+</ol>
+<p>How Traceroute Works</p>
+<ol>
+<li>
+<p><strong>Send a packet with TTL = 1</strong></p>
+<ul>
+<li>The first router decrements TTL to 0 and discards the packet.</li>
+<li>It replies with an ICMP Time Exceeded message.</li>
+<li>Traceroute records this router’s address as <strong>Hop 1</strong>.</li>
+</ul>
+</li>
+<li>
+<p><strong>Send a packet with TTL = 2</strong></p>
+<ul>
+<li>The first router decrements TTL to 1 and forwards the packet.</li>
+<li>The second router decrements TTL to 0 and discards it.</li>
+<li>It replies with an ICMP Time Exceeded message.</li>
+<li>Traceroute records this router’s address as <strong>Hop 2</strong>.</li>
+</ul>
+</li>
+<li>
+<p><strong>Increment TTL step by step</strong></p>
+<ul>
+<li>Traceroute repeats the process, gradually increasing TTL values.</li>
+<li>Each time, the packet travels one hop further before expiring.</li>
+<li>Each responding router reveals its IP address along the path.</li>
+</ul>
+</li>
+<li>
+<p><strong>When the packet finally reaches the destination</strong></p>
+<ul>
+<li>Instead of a Time Exceeded message, the destination typically replies with an ICMP Port Unreachable (for UDP probes) or an Echo Reply (for ICMP probes).</li>
+<li>This marks the <strong>end of the path</strong>.</li>
+</ul>
+</li>
+</ol>
+<p>Why Traceroute is Useful</p>
+<ul>
+<li><strong>Path Discovery:</strong> Shows all routers between source and destination.</li>
+<li><strong>Troubleshooting:</strong> Helps identify where delays, packet loss, or failures occur.</li>
+<li><strong>Network Analysis:</strong> Reveals asymmetric routes and routing policies.</li>
+</ul>
+<h3 id="ip-spoofing">IP Spoofing</h3>
+<p>Routers are designed with efficiency in mind. When a packet arrives, the router primarily examines the <strong>destination IP address</strong> in the packet’s header to decide where it should be forwarded. This design choice allows routers to process packets at very high speeds, where they simply look up the destination in the routing table and forward the packet accordingly. Importantly, routers typically <strong>do not verify the legitimacy of the source IP address</strong> in the packet.</p>
+<p>This design limitation opens the door to a technique known as <strong>IP spoofing</strong>. In IP spoofing, an attacker forges (or “spoofs”) the <strong>source IP address</strong> in the packet header. Since routers only check the destination IP, spoofed packets are forwarded through the network just like legitimate traffic.</p>
+<p><strong>Implications of IP spoofing include:</strong></p>
+<ul>
+<li><strong>Bypassing filters</strong>: Some security systems allow or block traffic based on source IP. Spoofing can be used to evade such controls.</li>
+<li><strong>Reflection and amplification attacks</strong>: Attackers can send requests with a spoofed source IP (victim’s address) to third-party servers. Those servers reply to the victim, overwhelming it with traffic. This is a common strategy in Distributed Denial of Service (DDoS) attacks.</li>
+<li><strong>Obfuscation</strong>: Attackers may spoof IPs to hide their true origin and complicate tracing efforts.</li>
+</ul>
+<p><strong>Defenses against IP spoofing:</strong></p>
+<ul>
+<li><strong>Ingress filtering</strong> (RFC 2827): ISPs can block packets with source IPs that do not match the expected range for the customer’s network.</li>
+<li><strong>Egress filtering</strong>: Organizations can block spoofed packets from leaving their networks.</li>
+</ul>
+<p>Unfortunately, they are partially deployed, but lack of universal adoption leaves the Internet vulnerable.</p>
+<p>In summary, IP spoofing exploits the fact that routers trust the destination IP for forwarding and do not validate source IPs. While simple, it remains a powerful tool for attackers in a range of network attacks.</p>
+<hr>
+<h2 id="7-future-studies">7. Future Studies</h2>
+<p>Advanced IP topics to be studied later:</p>
+<ul>
+<li>VLANs</li>
+<li>Router on a Stick</li>
+<li>RIP (Routing Information Protocol)</li>
+<li>OSPF (Open Shortest Path First)</li>
+<li>BGP (Border Gateway Protocol)</li>
+<li>NAT (Network Address Translation)</li>
+</ul>
+<hr>
+<h2 id="8-summary">8. Summary</h2>
+<ul>
+<li>IP header carries addressing and control info.</li>
+<li>Hosts decide: send direct (same LAN) or via gateway (router).</li>
+<li>Routers connect different networks, using routing tables.</li>
+<li>MikroTik provides hands-on router configuration.</li>
+<li>Practical issues: Traceroute, IP spoofing.</li>
+<li>Future studies: VLANs, advanced routing protocols, NAT.</li>
+</ul>
+<h2 id="appendix-router-configuration-example-mikrotik">Appendix. Router Configuration Example (MikroTik)</h2>
+<h3 id="ip-addressing">IP Addressing</h3>
+<pre class="hljs"><code><div>/ip address add address=192.168.1.1/24 interface=ether1 comment=<span class="hljs-string">"LAN"</span>
+/ip address <span class="hljs-built_in">print</span>
+/ip address remove numbers=0             <span class="hljs-comment"># Remove IP (check number with print)</span>
+</div></code></pre>
+<h3 id="routes">Routes</h3>
+<pre class="hljs"><code><div>/ip route add dst-address=0.0.0.0/0 gateway=192.168.1.254
+/ip route <span class="hljs-built_in">print</span>
+/ip route remove numbers=0
+</div></code></pre>
+
+</body>
+</html>

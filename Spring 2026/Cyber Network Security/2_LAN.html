@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<title>2_LAN.md</title>
+<meta content="text/html;charset=utf-8" http-equiv="Content-type"/>
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+<meta content="width=device-width, initial-scale=1" name="viewport"/><style>
+/* ===== Added for responsiveness ===== */
+:root {
+  --content-max-width: 980px;
+}
+
+html {
+  box-sizing: border-box;
+}
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
+body {
+  margin: 0 auto;
+  padding: 0 1rem;
+  max-width: var(--content-max-width);
+  line-height: 1.6;
+}
+
+/* Scale media to container */
+img, video, canvas, iframe, svg {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Let code blocks scroll horizontally */
+pre, code, pre code, code pre {
+  max-width: 100%;
+  overflow-x: auto;
+  white-space: pre;
+}
+
+/* Make tables scroll on small screens */
+table {
+  border-collapse: collapse;
+}
+@media (max-width: 900px) {
+  table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Headings scale down a bit on narrow viewports */
+@media (max-width: 600px) {
+  h1 { font-size: 1.6rem; }
+  h2 { font-size: 1.35rem; }
+  h3 { font-size: 1.2rem; }
+  body { font-size: 15px; }
+}
+
+/* Mermaid containers should not overflow */
+.mermaid {
+  max-width: 100%;
+  overflow: auto;
+}
+
+/* Have images centered by default */
+img { margin: 0.5rem auto; }
+/* ===== End responsive additions ===== */
+</style></head>
+<body>
+<script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="local-area-network-and-switches">Local Area Network and Switches</h1>
+<h1 id="by-dr-junjie-zhang">By <a href="jzhang369.github.io">Dr. Junjie Zhang</a></h1>
+<h2 id="1-local-area-network-lan">1. Local Area Network (LAN)</h2>
+<p>A <strong>Local Area Network (LAN)</strong> is the <strong>smallest type of computer network</strong>.<br/>
+It connects a few devices (called <strong>nodes</strong>) within a small area such as a home, office, or classroom.</p>
+<p><strong>What Makes Up a LAN?</strong></p>
+<ul>
+<li><strong>Nodes</strong>: Computers, laptops, printers, or servers.</li>
+<li><strong>Network Device</strong>: Usually a <strong>switch</strong> (or a hub, though switches are preferred).</li>
+<li><strong>Connections</strong>: Cables (Ethernet) or wireless (Wi-Fi).</li>
+</ul>
+<p>The switch acts like the central meeting point. Each node connects to the switch, and the switch allows them to talk to each other.</p>
+<p>A simple example:</p>
+<ul>
+<li>PC A and PC B are connected to a switch.</li>
+<li>The switch forwards data between them.</li>
+<li>Together, this setup is a <strong>LAN</strong>.</li>
+</ul>
+<pre><code class="language-mermaid"><div class="mermaid">flowchart LR
+    A[PC A] --- S[Switch]
+    B[PC B] --- S
+</div></code></pre>
+<p>A more practical example:</p>
+<p><img alt="An Example of A Local Area Network" src="https://ipcisco.com/wp-content/uploads/LAN.jpg"/></p>
+<h2 id="2-devices-in-a-network-each-node-has-an-ip-and-a-mac">2. Devices in a Network: Each Node Has an IP and a MAC</h2>
+<p>Every device connected to a network (PC, printer, server, router) is called a <strong>node</strong>.<br/>
+Each node has at least two important identifiers:</p>
+<ul>
+<li>
+<p><strong>MAC Address (hardware address)</strong></p>
+<ul>
+<li>Burned into the device’s network interface card (NIC).</li>
+<li>Used by switches inside a LAN to deliver frames.</li>
+<li>Example: <code>AA:BB:CC:DD:EE:FF</code></li>
+</ul>
+</li>
+<li>
+<p><strong>IP Address (logical address)</strong></p>
+<ul>
+<li>Assigned to identify the device across networks.</li>
+<li>Example: <code>192.168.1.10</code></li>
+</ul>
+</li>
+</ul>
+<p>We typically do not configure MAC addresses since they are pre-assigned by the manufacturer.<br/>
+However, <strong>IP addresses in a LAN carry structural information</strong>. Specifically, all devices in the same LAN share the same <strong>network prefix</strong>, and the <strong>network mask (subnet mask)</strong> helps each device determine what part of its IP address represents the network portion.</p>
+<hr/>
+<h3 id="example">Example</h3>
+<ul>
+<li>Device A: <code>192.168.1.10</code></li>
+<li>Device B: <code>192.168.1.20</code></li>
+<li>Netmask: <code>255.255.255.0</code> (binary: <code>11111111.11111111.11111111.00000000</code>)</li>
+</ul>
+<p>Applying the netmask to the IP address of Device A:</p>
+<pre class="hljs"><code><div>192.168.1.10   → 11000000.10101000.00000001.00001010
+255.255.255.0  → 11111111.11111111.11111111.00000000
+---------------------------------------------------
+Network Prefix → 11000000.10101000.00000001.00000000 = 192.168.1.0
+</div></code></pre>
+<p>Doing the same for Device B produces the same result.<br/>
+Thus, both devices compute the <strong>same network prefix (192.168.1.0)</strong> and know they are part of the same LAN.</p>
+<hr/>
+<h3 id="example-using-ifconfig">Example: Using <code>ifconfig</code></h3>
+<pre class="hljs"><code><div>$ ifconfig
+wlp13s0: flags=4163&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;  mtu 1500
+        inet 10.17.174.91  netmask 255.255.0.0  broadcast 10.17.255.255
+        inet6 fe80::4d3f:7324:f531:b4d3  prefixlen 64  scopeid 0x20&lt;link&gt;
+        ether 14:ac:60:2e:2a:75  txqueuelen 1000  (Ethernet)
+        RX packets 8207827  bytes 8623465882 (8.6 GB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 4952278  bytes 1134510804 (1.1 GB)
+        TX errors 0  dropped 28 overruns 0  carrier 0  collisions 0
+</div></code></pre>
+<p><img alt="star" class="emoji" src="data:image/png;base64,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"> Each node in the LAN, in addition to its MAC address and IP address, is also associated with a <strong>subnet mask</strong> that defines the boundaries of the network. A node can use its IP and the subnet mask to derive the network prefix of the LAN it belongs to.</img></p>
+<p>From this output we can see:</p>
+<ul>
+<li><strong>MAC Address</strong>: <code>14:ac:60:2e:2a:75</code></li>
+<li><strong>IPv4 Address</strong>: <code>10.17.174.91</code></li>
+<li><strong>Netmask</strong>: <code>255.255.0.0</code>
+<ul>
+<li>The netmask can also be expressed in <strong>CIDR notation</strong> (slash format):
+<ul>
+<li><code>255.255.0.0</code> → <code>/16</code></li>
+<li><code>/16</code> means the <strong>first 16 bits</strong> represent the network portion, and the remaining bits represent the host portion.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img alt="star" class="emoji" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAN80lEQVR4Xu2be4xd1XXGf2vv87iPmbkeG4xtwsvYxryStKUBCib4gccYxMPBRMUEYx5JW1JK+SNNAMUyJNAicHhHQAklaZKqcURKkiYYm2IQKS0IioTAvIyxgTH2PHznzuPee87Zq8dHR7rCI4FQ4hmw80mf1r77npHm+/Za6+y9RyOqyr4Mwz6OPxrwRwPGERtW2Fs3XGyv3NcMyMXLHGvM1WLkn9ZeIgftcwZYYy8r+lDypRBiLtynDHh8uRwYeJwd+BAGSmjNxU+skMI+Y4D1zJd9z1UmfO5UKil9L5kFLNonDLjvOPHD0CwPysrEOVcw8ZQrCMuKH9iv7RMGzPw8pwRh8tniwYdRnL6A0mEp03FYSOatWyHH7vUG+J691C8oHZ89D+OXU7ZlY79AEPreir3agHXL5eCgqGeGnWU6jl4GSMb2Y5dR6CzhF9wFv14mnYwhPMYQXmj+Mghce9uMkwgmHY1qDEA46RjaZ5zMUM/aA9oK9jzg/r0uA36zWMJCaC8Ky0Ll2OWABy7KCJbK5y6i2Cb4RblslYjZ6wwoTvPmhsXkqPJnplM89EzUNUHjjOk4nTsrfWY66TNfmHMpJ+91JeAFcklQdLQdeU7W/DQaIAckMcavpH3hXIbevYXhIf9y4Mm9JgPWXi6HlUq6uDypQvusL4NGQNKi7mKTttnnU5rYQbGoZ+9qmHtNBhQ874KwnJRL00/CmzAbF1URlBbARQP4E46kfPhJDPX+tt0f8S4Ebvx0Z0De/Iple2HY4VOe+SUy5PUPKTWnawBKedZSChWfYsku/9n5UvzUZ0DbjHBBsZ3ZpQNnEE47GY125sLZHdl34bQ5lA6cSX3wjVmTJweLgIc/1QYU283lxQ5HefrpmMJEiPpByIjSggIaY8JJtB2+mJH3bqet6f018PCntgT+95uFM9om2MWl/SZSOnQRxENAjKSkxQ/OxTWK6bOlAzpp6zTz/uea0nljmgHrl8l0Dex8QdudIgBiEAwFgwnVYGkBizEYLRhjQmMQ64MNRIOyd0BlSrGr3B775ekn4HXMRN0g4PhQ6CBexyzKh56Ia66z4oU//r/r2y9sjsTdSV0liUAdTp1rOCeNBOdoAXHsmqo7aKhDAQScquwwJL+Z/5D2fqgBSWguMXBt6Bl8TzApsTGSRrGAAWMNCBgDRkwapUVfsKHgFTyCEgRlQ+HgxSgJaAMRIYMyCgKoasoGhYPOJN7xODaUoFDyzo4bQtJQXJTS7aLJYqKgDlDQRFGXMpaUColHksYoURppTBKWAms+oge4e1XtF0T0NM8T9jv5AjpmfxGXjGQCEQBBRMGYTJAIWUQyQxAjiOdhrMUGHrZ8OJr0AY6PhkLSjz/x83SceD9JlOCSGE2jumzpQXOj8ohzqEruApkxYovUNm5gx1M/JnaKqj5QHeG37AZRVXbHI2dLe9sU+8OSr+eUD6hw4OJVlKfPx0U1Mp0mF6x5FMl9Ucg+GlpRgSZCAkKr+wk5RmVErsOAFMCBkotUhYyCAmgmDISWIU6yI/bQpvW888uVDG6vMtzknqcfcH+7UtV9iAGjb26m/5m9t9TmVrTvV2TqadfSdsg8NB7ITRAQ8gwgN0FAaH3Os4JWhnwQwmjxAEou9oNjRVuGtDIAlDw7BON1MLh5Pe+t/S6DO+oMDdubTrsvuoYcH2HAaKy7wl/dVnF/X9qvwNQv/gMdh8zHJVXEKCJZ3X9AbBZpmUKrajJIa/BBaB5aA/JVbplAHpU8Ks7lda+CsRUG3l5P9xP/yFAqfrAq3z7t+8kNv9c+YMHd0dWPft3uVNtYte3pm0GHaT+sC5IaiEMxrVeFMFo8Aij5qAWV0ep32x4Imj+mSO6FiLYyAEAdYMC2M7D5V2z73Z0M9TcYGJKrur6f3P4H2Qh13ZVcv+4q24c07tj233cIrkbH9HMQBlHXRKzkggTMbkuOZBR09O5ndCq0hI8yR0EAp63ad4qoRU2J2qY1bHvmQQZ7my5d+a923Rk/8AfdCS64Lbnr0b/zqirR/fLsP4cuqlKZeT5iItTFiDWA5Gz1hHzYEjsao41BkbyxCbm3tPpASlAHLsCJx8CrD7LjhTXUelxjqMrFC++M/22PbIW7bo9/tPZqb6cx/FReXFMmGaDjiGV4nsUlTYwVRPMuqKNKIOdoL0BHl4SSgVbtQ05NFAhJ1FHdeD99Lz1KrZfhoQH98sLb41/t0bPAwtXxLx+92j9djfdz88ra/TXupXLEcrxiGVyDTLcCYmmpMPm4Jb4lWEfNtaAgCtp65WkCQoG4UaX6ykP0vf4c1R7bV9sZLV14W/z4mByGulZHTz3+jWCR9ezP7VvPH4r2UZn5Ffz2g8ENgyhI3FKrgMhHlf7optjKgHzlDUiRaHBzKv5HDGzZzGCP7R6qRksWfi96ZkxPg/Nubj7/2DcKC63n/YdXeOdIa++ifMiZhBOPR0URRsiA2e09+CFNUHYvBZfXO5lwMYZmzwZqm37NYPcAtT7ZMtQfnbXg1uaL43IcPu3m+utPXiddQXv748FQfYa/42FEN+J3zkeCaShNoEEG5EP0t7axo7t/iKZ08btEPesY6n6ZkapjYCevDgyOnDHvVn1zXO8DTvmObn12dXl1NBLck8QBSf1VpPo2XvufYgongGkHjYCUJC3VAmDyOaEFzb8PgJRaxY08S1R9jqhWJ2p4jNRGumvV+Mx5N2Tix/9CJIpc7OIEdTHggygaPYW6FyA4GrGzwewPYshADLjdhBtUvCxCBG4LLtqIpnT1Gqp+So+k2aA+kjxy6sr6G5+YGyHjmG9a72lAUOlATYzEz6HuRcR0gpmCmmkgE4AimJAMrgGMgPaD64Z4O+p6gQglBFMGHKpNNFE01gmfmCuxdd+USmdn4WTxFDEKJKiAGAd4IAUyaB8k2yA1A3zAgkoWkSbggBjyfQQmAC0BDpUYxAEgolg4df01Mmn+jdo77gZI4v25F+qBxipiY8RYxIKqQ0hQBIFWXWdQIAYBiGjBBwQFlBhIgJaxGIexDutzgE3sXGDN+BtgWOQFBhsIWAHPoCqAIRMvuSAMokrrvKyjX4WqrfMgJh9pZibWIMZhfcELJY1mybgbkN7b26mzzHyv4DB+gljAOBCDoggeqkp+REbRVurj8s+CIIC2iEPzn1UiwIBRMAnGS/BC8ENdsP7raRncpb3jZkBpEkf6RTnahiC+otahRkHyRqgRiKDZlJCBJBOWzbf2P2DymENpkl94oJKgOPAdEihe6AiKsv+AT1YG42aADZnnFYxvA0E8IKUKaCZeQQ04ASWfA5xDnQGVPDty1UYQyY2woI4MikMRsAYMYBNMKHhF8NIyGFcDfI9FXugQX8EKGIMiOI0zoaKCGEN+VweJolE2RuOUThFxYBziWcSCGAFPEBREURLUWRRFTco8C7yC4ofMfzgtg3PTMhhzA/5zhUwpT+MEm6U/qAWV/LjqQEXQBBQHLhOeMWmmbIBrKkmsSH7NboIEG4INQHzAA7GSZ0qCU0UFEEV8sKHiFZlc6MvLYKwN0CJzvKJ0mlCQMEAlQlVxTkDAxYAqGrmUhkz4sBKPQJTG5ogSNdkoogU/0EODsuCXBK+YsiBIQcEmiG8AyG+/UQNYgwktXrGJ+CwZFwOMzxletmI++AFq6iTOZoKlKZBEEAsahSQNQ3OwSbOm1KuOkUF9Jor0Oy+9ztqjD6dghKVBIN8qVmRGoWII2ixeOcCGMfh1sALW4hw4FGcTTKmCFzQJiyx4eHlaBg9p75gZcN/XpHRYB6caX5HSBBw1ktihKaUJKBitoM2A5kCNxsAw9Z3K8E42N0a4cftL/GDpv2vyF2SIgB88ukp+UajqVaU2d2WxM66ElZhwQhm/1IbaKmqaIJCZkIAEBUwxwIb1/U0xL4OxMmCKcJwXcogJDV55Cs3mNqyC58D6UzHaSX2gh0Z/T7biw1UGU94RD3Jr12rtYzToWpnNfzvd4v7rYI3rypXkK4XqAIVKgXDiZ7DlkCTeStwYRJuAJPjt07DBJry8DMbur8PCAuOB1zYZVUNzWPHC2XiF04mGJ9O/eRO9b22n722nO7by053dHD//er02E/8RSPf3r81dqRf1vc/cnq1s6NtSp2/TJmrv9QB/QlieS0KFem07fvtBeAWD55OVwZgYsErEWI8ua6HYeRR+2xFUDroU1WPoe/NZeja+yM5dv/RWnu7fRteCVXrB6bfoy3xMLLpJn+h9ifn977G8dyuv9b+5g56Xn6a27X3KE5fSMeVLFCfMIijvj+ezvwbMHRMDjrmYw33hs15YpH3qXKw9iOpbT9H9wpp05XuovsvbO9/nst/dwCmLb9HH+D2wq0+cfrP+sL/KiX3drOp/x1V7XnuZbc//kEa1SlA+ivZpJ2EEPMsSPj742P8294vL5avlIvdOmjmD0tTp9G/9L5ojEVGdWn2E2waG+N4F92g/ewCPXCEzbBvXFYosDwIoTZhKefJx7HjxMWo99e2NYY7K3gZ7sgkaQ5cYGHz3LardbxA7tBHxk6jOd8+9W19hD+Ksu/UN4OKHr5QHA5+V9Z3dcwe3/BISg7VMxmce8LM9YkB++pvoV5gTO0hGEpqOJxPl+nPu0vWMIc69QzesElnwuStY1jBc6+OOSACUc/eoAUkbZV8pjDR4HeGmJffyL5qCcUD+t/4f/eRv5FelhCvV8VcInXuuB+Tnf2njeGPZsuR+fYdPEH52qRwBsPQBffVjG7Avw7CP448GsI/j/wFpvaxTrbeulwAAAABJRU5ErkJggg=="/> A LAN is typically represented by its <strong>network prefix</strong>.</p>
+<ul>
+<li>For this device, the network is represented as:
+<ul>
+<li><code>10.17.0.0/16</code></li>
+</ul>
+</li>
+<li>This means all devices with addresses starting with <code>10.17.*.*</code> (and using the same subnet mask <code>/16</code>) belong to the same LAN.</li>
+</ul>
+<h3 id="practical-examples-of-describing-lans-with-network-prefixes">Practical Examples of Describing LANs with Network Prefixes</h3>
+<p>When IT people describe a LAN, they usually say something like <strong>“this network is 192.168.1.0/24”</strong> or <strong>“our subnet is 10.0.0.0/16”</strong>. That’s shorthand for:</p>
+<ul>
+<li>All devices share that <strong>network prefix</strong>.</li>
+<li>The <strong>subnet mask</strong> determines how many addresses are available for hosts.</li>
+</ul>
+<p>Here are some conversational-style examples of how IT staff often describe LANs using <strong>network prefixes</strong>.</p>
+<ol>
+<li>Office Network Example</li>
+</ol>
+<blockquote>
+<p>“Our office LAN is on <strong>192.168.1.0/24</strong>."</p>
+</blockquote>
+<p>That means everyone’s computer gets an address like <code>192.168.1.x</code>, and the router is usually <code>192.168.1.1</code>.</p>
+<ol start="2">
+<li>University Lab Example</li>
+</ol>
+<blockquote>
+<p>“The engineering lab runs on <strong>10.0.0.0/16</strong>."</p>
+</blockquote>
+<p>So all lab machines are in the range <code>10.0.x.x</code>. If you’re outside that range, you’re not on the lab’s LAN.”</p>
+<ol start="3">
+<li>Home Wi-Fi Example</li>
+</ol>
+<blockquote>
+<p>“At home, my Wi-Fi uses <strong>192.168.0.0/24</strong>. My laptop is <code>192.168.0.12</code>, my phone is <code>192.168.0.15</code>, and the printer is <code>192.168.0.20</code>."</p>
+</blockquote>
+<p>They’re all in the same LAN because they share the <code>192.168.0</code> prefix.”</p>
+<ol start="4">
+<li>Data Center Example</li>
+</ol>
+<blockquote>
+<p>“The servers in rack 5 are in <strong>172.16.32.0/20</strong>."</p>
+</blockquote>
+<p>That block gives us about 4,000 IPs, so we can host a lot of virtual machines in that LAN.”</p>
+<h2 id="3-switch-as-a-table-linking-mac-addresses-to-ports">3. Switch as a Table: Linking MAC Addresses to Ports</h2>
+<p>A <strong>switch</strong> is the central device that connects all the nodes in a LAN.<br/>
+It works like a <strong>lookup table</strong> (called the <strong>MAC Address Table</strong> or <strong>Forwarding Table</strong>) that maps:</p>
+<ul>
+<li><strong>MAC Address → Active Port Number</strong></li>
+</ul>
+<p>This allows the switch to forward incoming frames only to the correct destination port instead of flooding the entire network.</p>
+<p><strong>Example:</strong></p>
+<table>
+<thead>
+<tr>
+<th>MAC Address</th>
+<th>Port Number</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AA:BB:CC:DD:EE:01</td>
+<td>Port 1</td>
+</tr>
+<tr>
+<td>AA:BB:CC:DD:EE:02</td>
+<td>Port 2</td>
+</tr>
+<tr>
+<td>AA:BB:CC:DD:EE:03</td>
+<td>Port 3</td>
+</tr>
+</tbody>
+</table>
+<p>When a frame destined for <code>AA:BB:CC:DD:EE:02</code> arrives, the switch sends it only out of <strong>Port 2</strong>.</p>
+<hr/>
+<h2 id="4-how-the-switch-builds-its-table">4. How the Switch Builds Its Table</h2>
+<p>Switches build their MAC address table <strong>gradually</strong> using a process called <strong>learning</strong>:</p>
+<ol>
+<li>
+<p><strong>Frame Arrival</strong></p>
+<ul>
+<li>A device (say PC A) sends a frame.</li>
+<li>The switch reads the <strong>source MAC address</strong> and records it along with the <strong>incoming port</strong>.</li>
+</ul>
+</li>
+<li>
+<p><strong>Table Update</strong></p>
+<ul>
+<li>If PC A’s MAC is <code>AA:AA:AA:AA:AA:AA</code> and it came from Port 1, the switch adds:
+<ul>
+<li><code>AA:AA:AA:AA:AA:AA → Port 1</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Forwarding Decision</strong></p>
+<ul>
+<li>When the switch receives a frame, it checks the <strong>destination MAC</strong>.</li>
+<li>If the MAC is in the table, forward to that port.</li>
+<li>If unknown, <strong>flood</strong> the frame to all ports except the incoming one.</li>
+</ul>
+</li>
+<li>
+<p><strong>Continuous Learning</strong></p>
+<ul>
+<li>Over time, the switch learns all active devices and builds a complete table.</li>
+</ul>
+</li>
+</ol>
+<h2 id="5-switches-as-the-building-blocks-of-networks">5. Switches as the Building Blocks of Networks</h2>
+<p>Switches provide the foundation for all modern computer networks:</p>
+<ul>
+<li>They allow us to <strong>build the smallest networks</strong> — even just two or three devices connected together.</li>
+<li>As we connect more switches, these small LANs grow into <strong>larger campus or enterprise networks</strong>.
+<ul>
+<li>Each switch has a limited number of ports (e.g., 8, 24, or 48).</li>
+<li>To connect more devices than one switch can support, you can <strong>link switches together</strong> using one or more ports.</li>
+<li>This interconnection allows devices connected to different switches to <strong>still belong to the same LAN</strong>.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Example</strong>: Two switches interconnected to form a larger LAN.</p>
+<pre><code class="language-mermaid"><div class="mermaid">flowchart LR
+    subgraph Switch1
+      A[PC A] --- S1[Switch 1]
+      B[PC B] --- S1
+    end
+    
+    subgraph Switch2
+      C[PC C] --- S2[Switch 2]
+      D[Printer] --- S2
+    end
+
+    S1 --- S2
+</div></code></pre>
+<hr/>
+<h2 id="6-special-cases-and-resilience">6. Special Cases and Resilience</h2>
+<h3 id="case-1-unknown-destination">Case 1: Unknown Destination</h3>
+<ul>
+<li>If the switch doesn’t know the destination MAC, it <strong>floods</strong> the frame to all ports.</li>
+<li>Once the destination replies, the switch learns the correct port.</li>
+</ul>
+<h3 id="case-2-table-aging">Case 2: Table Aging</h3>
+<ul>
+<li>To keep the table accurate, switches use an <strong>aging timer</strong>.</li>
+<li>If a MAC address is not seen for a certain period (e.g., 300 seconds), the entry is removed.</li>
+</ul>
+<h3 id="case-3-power-outage-and-recovery">Case 3: Power Outage and Recovery</h3>
+<ul>
+<li>Switches usually <strong>store the MAC address table in RAM</strong> (volatile memory).</li>
+<li>If power is lost, the table is erased.</li>
+<li>Upon reboot, the switch starts with an <strong>empty table</strong>.</li>
+<li>The learning process begins again automatically as soon as traffic flows.</li>
+<li>Within seconds or minutes, the switch rebuilds its MAC address table.</li>
+</ul>
+<h3 id="case-4-port-changes">Case 4: Port Changes</h3>
+<ul>
+<li>If a device moves to a different port, the switch updates the table automatically when it sees a frame with the same MAC on the new port.</li>
+</ul>
+<hr/>
+<h2 id="7-special-case-when-two-nodes-use-the-same-mac-address">7. Special Case: When Two Nodes Use the Same MAC Address</h2>
+<p>Normally, each device on a LAN has a <strong>unique MAC address</strong>. But sometimes:</p>
+<ul>
+<li>Accidentally (misconfiguration, cloning of virtual machines), or</li>
+<li>Intentionally (an attacker performing <strong>MAC spoofing</strong>)</li>
+</ul>
+<p>two nodes may use the <strong>same MAC address</strong>.</p>
+<h3 id="how-the-switch-reacts">How the Switch Reacts</h3>
+<ol>
+<li>
+<p><strong>Table Update Behavior</strong></p>
+<ul>
+<li>A switch associates a MAC address with the <strong>last port</strong> it was seen on.</li>
+<li>If Device A (Port 1) and Device B (Port 2) both claim the same MAC address:
+<ul>
+<li>When a frame arrives from Port 1, the switch updates its table: <code>MAC X → Port 1</code>.</li>
+<li>When a frame later arrives from Port 2 with the same MAC X, the switch updates: <code>MAC X → Port 2</code>.</li>
+</ul>
+</li>
+<li>This causes the entry to <strong>flap</strong> back and forth between ports.</li>
+</ul>
+</li>
+<li>
+<p><strong>Impact</strong></p>
+<ul>
+<li>Frames destined for that MAC will be sent only to the <strong>most recently learned port</strong>.</li>
+<li>The other device with the same MAC will <strong>not receive frames</strong> intended for it.</li>
+<li>In practice, this results in <strong>connectivity issues</strong> and unstable communication.</li>
+</ul>
+</li>
+<li>
+<p><strong>Security Risks</strong></p>
+<ul>
+<li>Attackers can exploit this to <strong>hijack traffic</strong>: by spoofing a victim’s MAC, the switch will forward frames to the attacker’s port instead.</li>
+<li>This is a type of <strong>Man-in-the-Middle (MITM)</strong> attack.</li>
+</ul>
+</li>
+<li>
+<p><strong>How Switches and Networks Defend</strong></p>
+<ul>
+<li><strong>Port Security</strong> (Cisco, HP, etc.): Admins can configure switches to allow only specific MAC addresses on a port.</li>
+<li><strong>Sticky MAC</strong>: Switch ``remembers'' which MACs belong to which ports and blocks changes.</li>
+<li><strong>Alerts/Logs</strong>: Many switches log ``MAC flapping'' or security violations.</li>
+</ul>
+</li>
+</ol>
+<h2 id="ethernet-and-the-mac-layer-ie-examine-packets-at-the-mac-address-level">Ethernet and the MAC Layer (i.e., examine packets at the MAC address level)</h2>
+<h3 id="1-ethernet-framepacket-structure">1. Ethernet Frame/Packet Structure</h3>
+<p>An Ethernet frame has three main parts:</p>
+<pre class="hljs"><code><div>+-------------------+-------------------+-----------+-------------------+----------+
+| Destination MAC   | Source MAC        | EtherType | Payload (46–1500) |   CRC    |
+| (6 bytes)         | (6 bytes)         | (2 bytes) |                   | (4 bytes)|
++-------------------+-------------------+-----------+-------------------+----------+
+</div></code></pre>
+<ul>
+<li><strong>Destination MAC (6 bytes)</strong> → where the frame is going.</li>
+<li><strong>Source MAC (6 bytes)</strong> → who sent the frame.</li>
+<li><strong>EtherType (2 bytes)</strong> → what type of payload follows (e.g., IPv4, ARP, IPv6).</li>
+<li><strong>Payload (46–1500 bytes)</strong> → the actual data being carried.</li>
+<li><strong>CRC (4 bytes)</strong> → Cyclic Redundancy Check, used for error detection.</li>
+</ul>
+<hr/>
+<h3 id="2-example-of-an-ethernet-frame">2. Example of an Ethernet Frame</h3>
+<p>Suppose Device A sends an IPv4 packet to Device B:</p>
+<ul>
+<li>Destination MAC: <code>00:11:22:33:44:55</code></li>
+<li>Source MAC: <code>AA:BB:CC:DD:EE:FF</code></li>
+<li>EtherType: <code>0x0800</code> (IPv4)</li>
+<li>Payload: IP packet</li>
+<li>CRC: calculated automatically by the NIC</li>
+</ul>
+<hr/>
+<h3 id="3-using-wireshark-to-parse-ethernet-frames">3. Using Wireshark to Parse Ethernet Frames</h3>
+<p>You can use the following Python code to generate Ethernet frames/packets. Please note that <code>EtherType</code> field is not specified.</p>
+<pre class="hljs"><code><div><span class="hljs-comment">#!/usr/bin/env python3</span>
+<span class="hljs-keyword">from</span> scapy.all <span class="hljs-keyword">import</span> Ether, sendp, get_if_hwaddr
+<span class="hljs-keyword">import</span> sys
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>:</span>
+    <span class="hljs-keyword">if</span> len(sys.argv) &lt; <span class="hljs-number">2</span>:
+        print(<span class="hljs-string">f"Usage: <span class="hljs-subst">{sys.argv[<span class="hljs-number">0</span>]}</span> &lt;destination-mac&gt; [iface] [count]"</span>)
+        sys.exit(<span class="hljs-number">1</span>)
+
+    dst_mac = sys.argv[<span class="hljs-number">1</span>]
+    iface = sys.argv[<span class="hljs-number">2</span>] <span class="hljs-keyword">if</span> len(sys.argv) &gt; <span class="hljs-number">2</span> <span class="hljs-keyword">else</span> <span class="hljs-string">"eth0"</span>
+    count = int(sys.argv[<span class="hljs-number">3</span>]) <span class="hljs-keyword">if</span> len(sys.argv) &gt; <span class="hljs-number">3</span> <span class="hljs-keyword">else</span> <span class="hljs-number">5</span>
+
+    <span class="hljs-comment"># Get the source MAC of the interface</span>
+    <span class="hljs-keyword">try</span>:
+        src_mac = get_if_hwaddr(iface)
+    <span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> e:
+        print(<span class="hljs-string">f"[!] Failed to get MAC for interface '<span class="hljs-subst">{iface}</span>': <span class="hljs-subst">{e}</span>"</span>)
+        sys.exit(<span class="hljs-number">1</span>)
+
+    <span class="hljs-comment"># Generate payloads: "AAAA", "BBBB", "CCCC", etc.</span>
+    payloads = [chr(<span class="hljs-number">65</span> + i) * <span class="hljs-number">4</span> <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(count)]  <span class="hljs-comment"># 65 = 'A'</span>
+
+    print(<span class="hljs-string">f"[+] Using iface=<span class="hljs-subst">{iface}</span>, src=<span class="hljs-subst">{src_mac}</span>, dst=<span class="hljs-subst">{dst_mac}</span>, count=<span class="hljs-subst">{count}</span>"</span>)
+    <span class="hljs-keyword">for</span> idx, payload <span class="hljs-keyword">in</span> enumerate(payloads, start=<span class="hljs-number">1</span>):
+        pkt = Ether(src=src_mac, dst=dst_mac) / payload
+        print(<span class="hljs-string">f"[+] Sending packet <span class="hljs-subst">{idx}</span>: src=<span class="hljs-subst">{src_mac}</span>, dst=<span class="hljs-subst">{dst_mac}</span>, payload=<span class="hljs-subst">{payload}</span>"</span>)
+        sendp(pkt, iface=iface, verbose=<span class="hljs-literal">False</span>)
+
+    print(<span class="hljs-string">"[+] Done."</span>)
+
+<span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">"__main__"</span>:
+    main()
+</div></code></pre>
+<p>Now, if you use WireShark to capture packets, you will see these packets transferred via the links. Wireshark shows Ethernet headers clearly:</p>
+<ol>
+<li>Open Wireshark and start a capture.</li>
+<li>Select a packet and expand the <strong>“Ethernet II”</strong> section.</li>
+<li>You will see:
+<ul>
+<li><strong>Destination MAC Address</strong></li>
+<li><strong>Source MAC Address</strong></li>
+<li><strong>Type (EtherType)</strong></li>
+</ul>
+</li>
+</ol>
+<p><strong>Example (Wireshark output):</strong></p>
+<pre class="hljs"><code><div>Ethernet II
+    Destination: ff:ff:ff:ff:ff:ff (Broadcast)
+    Source: 14:ac:60:2e:2a:75
+    Type: ??
+</div></code></pre>
+<hr/>
+<h3 id="6-summary">6. Summary</h3>
+<ul>
+<li>Ethernet uses <strong>MAC addresses</strong> for delivery inside a LAN.</li>
+<li>Each frame includes <strong>destination, source, type, payload, and CRC</strong>.</li>
+<li>The <strong>EtherType field</strong> identifies the payload protocol (e.g., IPv4, ARP, IPv6).</li>
+<li><strong>Wireshark</strong> is widely used to inspect and understand these headers.</li>
+</ul>
+</body>
+</html>

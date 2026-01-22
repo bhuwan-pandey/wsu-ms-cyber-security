@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>1_basics (Responsive)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html { font-size: clamp(14px, 1.4vw + 0.2rem, 18px); }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Ubuntu", "Roboto", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0 auto;
+    padding: clamp(12px, 3vw, 28px);
+    max-width: 1100px;
+    color: #222;
+    background: #fff;
+  }
+
+  h1, h2, h3, h4 { font-weight: 600; line-height: 1.25; margin: 0.8em 0 0.4em; }
+  h1 { border-bottom: 1px solid rgba(0,0,0,.15); padding-bottom: .3em; }
+
+  a { color: #0b5bd3; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  img, svg, canvas, video { display: block; max-width: 100%; height: auto; }
+
+  .table-wrap { overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; min-width: 420px; }
+  th, td { text-align: left; padding: 0.5em 0.7em; border-bottom: 1px solid rgba(0,0,0,.15); vertical-align: top; }
+  thead th { border-bottom-width: 2px; }
+
+  code, pre, kbd, samp { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+  pre {
+    background: #f8f8f8;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 1rem;
+    overflow: auto;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+  :not(pre) > code {
+    background: #f2f4f7;
+    border: 1px solid #e5e7eb;
+    border-radius: 4px;
+    padding: 0 .25em;
+  }
+
+  blockquote { margin: 1em 0; padding: .6em 1em; border-left: 4px solid #0b5bd3; background: #f7faff; }
+
+  hr { border: 0; height: 1px; background: rgba(0,0,0,.15); margin: 2em 0; }
+
+  .mermaid { max-width: 100%; margin: 1em 0; }
+</style>
+
+<script defer src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    if (window.mermaid) {
+      mermaid.initialize({ startOnLoad: true, theme: "default" });
+    }
+  });
+  window.addEventListener("load", function () {
+    document.querySelectorAll(".mermaid svg").forEach(function (svg) {
+      svg.removeAttribute("height");
+      svg.setAttribute("width", "100%");
+      svg.style.height = "auto";
+      svg.setAttribute("preserveAspectRatio", "xMinYMin meet");
+      svg.style.maxWidth = "100%";
+    });
+  });
+</script>
+</head>
+<body>
+
+<h1 id="network-interface-controller-and-network-addresses">Network Interface Controller and Network Addresses</h1>
+<h1 id="by-dr-junjie-zhang">By <a href="jzhang369.github.io">Dr. Junjie Zhang</a></h1>
+<h2 id="network-interface-controller-nic">Network Interface Controller (NIC)</h2>
+<p>A <strong>Network Interface Controller</strong> (NIC) is a hardware component that allows a computer to connect to a network. A NIC is also referred to as</p>
+<ul>
+<li>a network interface card,</li>
+<li>network adapter,</li>
+<li>LAN adapter, or</li>
+<li>physical network interface.</li>
+</ul>
+<p>It provides the physical and logical interface between a computer (or other device) and an Ethernet network.</p>
+<ul>
+<li>Each NIC is uniquely identified by a <strong>MAC</strong> (Media Access Control) address, which is permanently assigned to it by the manufacturer.</li>
+<li>In addition, each ethernet NIC can be additionally configured with an <strong>IP</strong> (Internet Protocol) address, enabling logical communication across different networks.</li>
+</ul>
+<p>Examples:</p>
+<ul>
+<li>An Ethernet NIC is a type of network interface controller designed specifically for wired Ethernet connections (e.g.,., the Internet).</li>
+<li>A wireless NIC is a network interface controller which connects to a wireless network, such as Wi-Fi, Bluetooth, or LTE (4G) or 5G rather than a wired network, such as an Ethernet network.</li>
+</ul>
+<p><img src="https://miro.medium.com/1*m_lAOSr4KW7O0WAjFJZz7w.jpeg" alt="An Ethernet NIC"></p>
+<p><img src="https://mm.digikey.com/Volume0/opasdata/d220001/derivates/1/003/198/847/MFG_AIW-171HQ-001_sml(200x200).jpg" alt="A WiFi NIC"></p>
+
+<h2 id="network-addresses----mac-addresses-and-ip-addresses">Network Addresses -- MAC Addresses and IP Addresses</h2>
+<p>In a network, multiple devices (computers, phones, printers, servers) are interconnected. To ensure that information reaches the correct destination, we need addresses. There are two types of addresses.</p>
+<ul>
+<li>
+<p><strong>Media Access Control (MAC) address</strong></p>
+<ul>
+<li><strong>Definition</strong>: A <strong>Media Access Control (MAC) address</strong> is a unique hardware address assigned to a device’s network interface card (NIC).</li>
+<li><strong>Format</strong>: 48 bits.</li>
+<li><strong>Scope</strong>: Works within a <strong>single local network (LAN)</strong>.</li>
+</ul>
+</li>
+<li>
+<p><strong>Internet Protocol (IP) address</strong></p>
+<ul>
+<li><strong>Definition</strong>: An <strong>Internet Protocol (IP) address</strong> is a logical identifier assigned to a device to enable communication across networks.</li>
+<li><strong>Versions</strong>:
+<ul>
+<li>IPv4: 32-bit</li>
+<li>IPv6: 128-bit</li>
+</ul>
+</li>
+<li><strong>Scope</strong>: Works across <strong>different networks (LANs, WANs, Internet)</strong>.</li>
+</ul>
+</li>
+</ul>
+
+<pre><code>$ ifconfig
+eth0: flags=4163&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;  mtu 1500
+        inet 172.21.4.154  netmask 255.255.240.0  broadcast 172.21.15.255
+        inet6 fe80::215:5dff:fefb:b256  prefixlen 64  scopeid 0x20&lt;link&gt;
+        ether 00:15:5d:fb:b2:56  txqueuelen 1000  (Ethernet)
+        RX packets 517  bytes 61798 (61.7 KB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 108  bytes 16138 (16.1 KB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+</code></pre>
+<p>The MAC address is <strong>00:15:5d:fb:b2:56</strong>, and the IPv4 address is <strong>172.21.4.154</strong>.</p>
+
+<p><strong>Q:</strong> But you told me the IP address has 32 bits.</p>
+
+<h2 id="mac-address-48-bit-sequence-%E2%86%92-colon-separated-hexadecimal">MAC Address: 48-bit Sequence → Colon-Separated Hexadecimal</h2>
+<p>A MAC address is fundamentally a <strong>48-bit binary sequence</strong>.<br>
+For readability, this sequence is split into <strong>six groups of 8 bits (octets)</strong>. Each octet is then converted into a <strong>two-digit hexadecimal number</strong> and separated by colons (<code>:</code>).</p>
+
+<ol>
+<li>Start with a 48-bit sequence:</li>
+</ol>
+<pre><code>00000000 00011010 00101011 00111100 01001101 01011110
+</code></pre>
+
+<ol start="2">
+<li>Split into 6 octets (8 bits each):</li>
+</ol>
+<pre><code>00000000 : 00011010 : 00101011 : 00111100 : 01001101 : 01011110
+</code></pre>
+
+<ol start="3">
+<li>Convert each octet to hexadecimal:</li>
+</ol>
+<ul>
+<li><code>00000000</code> → <code>00</code></li>
+<li><code>00011010</code> → <code>1A</code></li>
+<li><code>00101011</code> → <code>2B</code></li>
+<li><code>00111100</code> → <code>3C</code></li>
+<li><code>01001101</code> → <code>4D</code></li>
+<li><code>01011110</code> → <code>5E</code></li>
+</ul>
+
+<ol start="4">
+<li>Combine them with colons:</li>
+</ol>
+<pre><code>00:1A:2B:3C:4D:5E
+</code></pre>
+
+<h2 id="ipv4-32-bit-sequence-%E2%86%92-dotted-decimal-notation">IPv4: 32-bit Sequence → Dotted Decimal Notation</h2>
+<p>An IPv4 address is fundamentally a <strong>32-bit binary sequence</strong>.<br>
+For readability, this sequence is split into <strong>four groups of 8 bits (octets)</strong>. Each octet is then converted into a <strong>decimal number</strong> (0–255) and separated by dots (<code>.</code>).</p>
+
+<ol>
+<li>Start with a 32-bit sequence:</li>
+</ol>
+<pre><code>11000000101010000000000100001010
+</code></pre>
+
+<ol start="2">
+<li>Split into 4 octets (8 bits each):</li>
+</ol>
+<pre><code>11000000 . 10101000 . 00000001 . 00001010
+</code></pre>
+
+<ol start="3">
+<li>Convert each octet to decimal:</li>
+</ol>
+<ul>
+<li><code>11000000</code> → <code>192</code></li>
+<li><code>10101000</code> → <code>168</code></li>
+<li><code>00000001</code> → <code>1</code></li>
+<li><code>00001010</code> → <code>10</code></li>
+</ul>
+
+<ol start="4">
+<li>Combine them with dots:</li>
+</ol>
+<pre><code>192.168.1.10
+</code></pre>
+
+<p>You can also convert an IPv4 Address into a 32-bit sequence.</p>
+<pre><code># convert an IP address into 32 bits.
+import ipaddress
+def ipv4_to_bits_stdlib(ip: str) -> str:
+    addr = ipaddress.IPv4Address(ip)  # validates format and range
+    return format(int(addr), "032b")
+
+# Examples:
+print(ipv4_to_bits_stdlib("192.168.1.10"))
+print(ipv4_to_bits_stdlib("8.8.8.8"))
+</code></pre>
+
+<h2 id="mac-address-and-manufacturers"><strong>MAC Address and Manufacturers</strong></h2>
+<p>A <strong>MAC (Media Access Control) address</strong> is not just a random identifier. The first 24 bits (the first three octets), known as the <strong>Organizationally Unique Identifier (OUI)</strong>, are assigned by the <strong>IEEE</strong> to hardware manufacturers. This ensures that each device produced by a vendor has a unique address.</p>
+<ul>
+<li><strong>OUI (first 3 bytes)</strong> → identifies the manufacturer.</li>
+<li><strong>Device-specific portion (last 3 bytes)</strong> → uniquely identifies a specific network interface card (NIC) made by that manufacturer.</li>
+</ul>
+<p>This structure means that by examining a MAC address, you can often determine the vendor of the device.</p>
+
+<h3 id="examples">Examples</h3>
+<ul>
+<li><code>00:1A:2B:xx:xx:xx</code> → Cisco Systems, Inc.</li>
+<li><code>3C:5A:B4:xx:xx:xx</code> → Google, Inc.</li>
+<li><code>AC:DE:48:xx:xx:xx</code> → Intel Corporation</li>
+<li><code>F0:27:65:xx:xx:xx</code> → Apple, Inc.</li>
+<li><code>B8:27:EB:xx:xx:xx</code> → Raspberry Pi Foundation</li>
+</ul>
+<p><em>(Here <code>xx:xx:xx</code> represents the device-specific part assigned by the manufacturer.)</em></p>
+
+<p><strong>Why This Matters</strong></p>
+<ul>
+<li><strong>Network Management</strong>: IT administrators can quickly identify which vendor a device belongs to.</li>
+<li><strong>Troubleshooting</strong>: Helps in locating faulty or unauthorized devices.</li>
+<li><strong>Security</strong>: Useful in access control lists (ACLs) and monitoring rogue devices.</li>
+</ul>
+
+<h2 id="ip-addresses-and-organizations">IP Addresses and Organizations</h2>
+<p>An <strong>IP (Internet Protocol) address</strong> is not just a random number. Behind every IP address is an <strong>organization</strong> or <strong>Internet Service Provider (ISP)</strong> that has been allocated responsibility for managing it. Much like how the first part of a MAC address (the OUI) identifies the manufacturer, an IP address belongs to a block assigned by a <strong>Regional Internet Registry (RIR)</strong> to a specific organization. This ensures that each IP block on the Internet is uniquely managed and traceable.</p>
+
+<ol>
+<li><strong>Global Allocation</strong>
+  <ul>
+    <li>The Internet Assigned Numbers Authority (IANA) oversees the global pool of IP addresses.</li>
+    <li>Large blocks are delegated to <strong>Regional Internet Registries (RIRs)</strong>:
+      <ul>
+        <li><strong>ARIN</strong> – American Registry for Internet Numbers (North America)</li>
+        <li><strong>RIPE NCC</strong> – Europe, Middle East, parts of Central Asia</li>
+        <li><strong>APNIC</strong> – Asia Pacific</li>
+        <li><strong>LACNIC</strong> – Latin America and Caribbean</li>
+        <li><strong>AFRINIC</strong> – Africa</li>
+      </ul>
+    </li>
+  </ul>
+</li>
+<li><strong>Assignment to Organizations</strong>
+  <ul>
+    <li>Each RIR further allocates smaller IP ranges to ISPs, universities, companies, and government agencies.</li>
+    <li>These allocations ensure uniqueness and accountability for every address on the Internet.</li>
+  </ul>
+</li>
+<li><strong>Looking Up the Organization</strong>
+  <ul>
+    <li>Tools such as the <strong><code>whois</code> command</strong> can query these databases to find:
+      <ul>
+        <li>Organization name</li>
+        <li>Network range (CIDR block)</li>
+        <li>Country and region</li>
+        <li>Administrative and technical contact details</li>
+      </ul>
+    </li>
+  </ul>
+</li>
+</ol>
+
+<hr>
+
+<h3 id="examples-of-ip-to-organization-mapping">Examples of IP-to-Organization Mapping</h3>
+<ul>
+<li>IP address <code>8.8.8.8</code> → <strong>Google LLC</strong> (Google Public DNS)</li>
+<li>IP address <code>1.1.1.1</code> → <strong>Cloudflare, Inc.</strong> (Cloudflare Public DNS)</li>
+<li>Network block <code>128.143.0.0/16</code> → <strong>University of Virginia</strong></li>
+</ul>
+
+<hr>
+
+<h3 id="practical-example-using-whois">Practical Example: Using <code>whois</code></h3>
+<p>Suppose we want to know the organization behind Google’s public DNS IP address <code>8.8.8.8</code>.</p>
+<p>Command:</p>
+<pre><code>whois 8.8.8.8
+</code></pre>
+<p>Sample Output (simplified):</p>
+<pre><code>NetRange:       8.8.8.0 - 8.8.8.255
+CIDR:           8.8.8.0/24
+NetName:        LVLT-GOGL-8-8-8
+Organization:   Google LLC (GOGL)
+RegDate:        2014-03-14
+Updated:        2014-03-14
+Country:        US
+</code></pre>
+<p><strong>Interpretation</strong>:</p>
+<ul>
+<li>The block <code>8.8.8.0/24</code> belongs to <strong>Google LLC</strong>.</li>
+<li>The address is registered in the United States.</li>
+<li>The entry provides both technical and administrative information, ensuring transparency.</li>
+</ul>
+
+<hr>
+
+<h3 id="why-this-matters">Why This Matters</h3>
+<ul>
+<li><strong>Network Management</strong>: Administrators can trace where network traffic originates.</li>
+<li><strong>Security</strong>: Helps detect suspicious IP addresses and link them back to real organizations.</li>
+<li><strong>Research</strong>: Provides insights into global Internet infrastructure and address usage.</li>
+</ul>
+
+</body>
+</html>

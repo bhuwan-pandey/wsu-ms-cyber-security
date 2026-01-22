@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<title>5_Transport.md</title>
+<meta content="text/html;charset=utf-8" http-equiv="Content-type"/>
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/><style>
+/* === Responsive Enhancements === */
+:root {
+  --base-font-size: 16px;
+  --max-content-width: 980px;
+}
+
+html { font-size: var(--base-font-size); }
+body {
+  margin: 0;
+  padding: clamp(12px, 2.5vw, 28px);
+  max-width: var(--max-content-width);
+  margin-inline: auto;
+  line-height: 1.6;
+}
+
+/* Headings scale gracefully */
+h1 { font-size: clamp(1.6rem, 2.5vw, 2.2rem); }
+h2 { font-size: clamp(1.4rem, 2.2vw, 1.9rem); }
+h3 { font-size: clamp(1.2rem, 2vw, 1.5rem); }
+p, li { font-size: clamp(0.95rem, 1.3vw, 1.0625rem); }
+
+/* Images already have max-width:100% in original CSS; ensure block layout */
+img { height: auto; display: block; margin: 0.5rem auto; }
+
+/* Make tables horizontally scrollable on small screens */
+table { display: block; width: 100%; overflow-x: auto; border-collapse: collapse; }
+table thead th, table tbody td { white-space: nowrap; }
+
+/* Code blocks wrap instead of forcing wide layout */
+pre, code { white-space: pre-wrap; word-break: break-word; }
+pre { overflow-x: auto; }
+
+/* Mermaid container should adapt */
+.mermaid { max-width: 100%; overflow: auto; }
+
+/* A soft container card look for readability */
+.container {
+  background: color-mix(in srgb, Canvas 95%, #000 5%);
+  border-radius: 14px;
+  padding: clamp(12px, 2vw, 20px);
+  box-shadow: 0 1px 10px rgba(0,0,0,.06);
+}
+@media (prefers-color-scheme: dark) {
+  .container { background: color-mix(in srgb, Canvas 92%, #fff 8%); }
+}
+
+/* Sticky table headers when possible */
+table thead th { position: sticky; top: 0; backdrop-filter: blur(4px); }
+
+/* Improve link wrapping */
+a { overflow-wrap: anywhere; }
+
+/* Improve printable layout */
+@media print {
+  body { max-width: none; padding: 0.5in; }
+  .container { box-shadow: none; }
+}
+</style></head>
+<body><script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script><div class="container">
+
+<h1 id="transport-layer-protocols-udp-and-tcp">Transport Layer Protocols: UDP and TCP</h1>
+<h1 id="by-dr-junjie-zhang">By <a href="jzhang369.github.io">Dr. Junjie Zhang</a></h1>
+<hr/>
+<h2 id="1-from-ip-to-transport-layer">1. From IP to Transport Layer</h2>
+<p>Recall from the previous lecture:</p>
+<ul>
+<li>The <strong>IP protocol</strong> delivers packets from one host to another host (identified by <strong>IP addresses</strong>).</li>
+<li>However, <strong>hosts run multiple applications simultaneously</strong> (e.g., web browser, email, SSH).</li>
+</ul>
+<p><img alt="question" class="emoji" src="data:image/png;base64,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"/> <strong>How does the network know which application inside the host should receive the packet?</strong></p>
+<p><img alt="star" class="emoji" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAN80lEQVR4Xu2be4xd1XXGf2vv87iPmbkeG4xtwsvYxryStKUBCib4gccYxMPBRMUEYx5JW1JK+SNNAMUyJNAicHhHQAklaZKqcURKkiYYm2IQKS0IioTAvIyxgTH2PHznzuPee87Zq8dHR7rCI4FQ4hmw80mf1r77npHm+/Za6+y9RyOqyr4Mwz6OPxrwRwPGERtW2Fs3XGyv3NcMyMXLHGvM1WLkn9ZeIgftcwZYYy8r+lDypRBiLtynDHh8uRwYeJwd+BAGSmjNxU+skMI+Y4D1zJd9z1UmfO5UKil9L5kFLNonDLjvOPHD0CwPysrEOVcw8ZQrCMuKH9iv7RMGzPw8pwRh8tniwYdRnL6A0mEp03FYSOatWyHH7vUG+J691C8oHZ89D+OXU7ZlY79AEPreir3agHXL5eCgqGeGnWU6jl4GSMb2Y5dR6CzhF9wFv14mnYwhPMYQXmj+Mghce9uMkwgmHY1qDEA46RjaZ5zMUM/aA9oK9jzg/r0uA36zWMJCaC8Ky0Ll2OWABy7KCJbK5y6i2Cb4RblslYjZ6wwoTvPmhsXkqPJnplM89EzUNUHjjOk4nTsrfWY66TNfmHMpJ+91JeAFcklQdLQdeU7W/DQaIAckMcavpH3hXIbevYXhIf9y4Mm9JgPWXi6HlUq6uDypQvusL4NGQNKi7mKTttnnU5rYQbGoZ+9qmHtNBhQ874KwnJRL00/CmzAbF1URlBbARQP4E46kfPhJDPX+tt0f8S4Ebvx0Z0De/Iple2HY4VOe+SUy5PUPKTWnawBKedZSChWfYsku/9n5UvzUZ0DbjHBBsZ3ZpQNnEE47GY125sLZHdl34bQ5lA6cSX3wjVmTJweLgIc/1QYU283lxQ5HefrpmMJEiPpByIjSggIaY8JJtB2+mJH3bqet6f018PCntgT+95uFM9om2MWl/SZSOnQRxENAjKSkxQ/OxTWK6bOlAzpp6zTz/uea0nljmgHrl8l0Dex8QdudIgBiEAwFgwnVYGkBizEYLRhjQmMQ64MNRIOyd0BlSrGr3B775ekn4HXMRN0g4PhQ6CBexyzKh56Ia66z4oU//r/r2y9sjsTdSV0liUAdTp1rOCeNBOdoAXHsmqo7aKhDAQScquwwJL+Z/5D2fqgBSWguMXBt6Bl8TzApsTGSRrGAAWMNCBgDRkwapUVfsKHgFTyCEgRlQ+HgxSgJaAMRIYMyCgKoasoGhYPOJN7xODaUoFDyzo4bQtJQXJTS7aLJYqKgDlDQRFGXMpaUColHksYoURppTBKWAms+oge4e1XtF0T0NM8T9jv5AjpmfxGXjGQCEQBBRMGYTJAIWUQyQxAjiOdhrMUGHrZ8OJr0AY6PhkLSjz/x83SceD9JlOCSGE2jumzpQXOj8ohzqEruApkxYovUNm5gx1M/JnaKqj5QHeG37AZRVXbHI2dLe9sU+8OSr+eUD6hw4OJVlKfPx0U1Mp0mF6x5FMl9Ucg+GlpRgSZCAkKr+wk5RmVErsOAFMCBkotUhYyCAmgmDISWIU6yI/bQpvW888uVDG6vMtzknqcfcH+7UtV9iAGjb26m/5m9t9TmVrTvV2TqadfSdsg8NB7ITRAQ8gwgN0FAaH3Os4JWhnwQwmjxAEou9oNjRVuGtDIAlDw7BON1MLh5Pe+t/S6DO+oMDdubTrsvuoYcH2HAaKy7wl/dVnF/X9qvwNQv/gMdh8zHJVXEKCJZ3X9AbBZpmUKrajJIa/BBaB5aA/JVbplAHpU8Ks7lda+CsRUG3l5P9xP/yFAqfrAq3z7t+8kNv9c+YMHd0dWPft3uVNtYte3pm0GHaT+sC5IaiEMxrVeFMFo8Aij5qAWV0ep32x4Imj+mSO6FiLYyAEAdYMC2M7D5V2z73Z0M9TcYGJKrur6f3P4H2Qh13ZVcv+4q24c07tj233cIrkbH9HMQBlHXRKzkggTMbkuOZBR09O5ndCq0hI8yR0EAp63ad4qoRU2J2qY1bHvmQQZ7my5d+a923Rk/8AfdCS64Lbnr0b/zqirR/fLsP4cuqlKZeT5iItTFiDWA5Gz1hHzYEjsao41BkbyxCbm3tPpASlAHLsCJx8CrD7LjhTXUelxjqMrFC++M/22PbIW7bo9/tPZqb6cx/FReXFMmGaDjiGV4nsUlTYwVRPMuqKNKIOdoL0BHl4SSgVbtQ05NFAhJ1FHdeD99Lz1KrZfhoQH98sLb41/t0bPAwtXxLx+92j9djfdz88ra/TXupXLEcrxiGVyDTLcCYmmpMPm4Jb4lWEfNtaAgCtp65WkCQoG4UaX6ykP0vf4c1R7bV9sZLV14W/z4mByGulZHTz3+jWCR9ezP7VvPH4r2UZn5Ffz2g8ENgyhI3FKrgMhHlf7optjKgHzlDUiRaHBzKv5HDGzZzGCP7R6qRksWfi96ZkxPg/Nubj7/2DcKC63n/YdXeOdIa++ifMiZhBOPR0URRsiA2e09+CFNUHYvBZfXO5lwMYZmzwZqm37NYPcAtT7ZMtQfnbXg1uaL43IcPu3m+utPXiddQXv748FQfYa/42FEN+J3zkeCaShNoEEG5EP0t7axo7t/iKZ08btEPesY6n6ZkapjYCevDgyOnDHvVn1zXO8DTvmObn12dXl1NBLck8QBSf1VpPo2XvufYgongGkHjYCUJC3VAmDyOaEFzb8PgJRaxY08S1R9jqhWJ2p4jNRGumvV+Mx5N2Tix/9CJIpc7OIEdTHggygaPYW6FyA4GrGzwewPYshADLjdhBtUvCxCBG4LLtqIpnT1Gqp+So+k2aA+kjxy6sr6G5+YGyHjmG9a72lAUOlATYzEz6HuRcR0gpmCmmkgE4AimJAMrgGMgPaD64Z4O+p6gQglBFMGHKpNNFE01gmfmCuxdd+USmdn4WTxFDEKJKiAGAd4IAUyaB8k2yA1A3zAgkoWkSbggBjyfQQmAC0BDpUYxAEgolg4df01Mmn+jdo77gZI4v25F+qBxipiY8RYxIKqQ0hQBIFWXWdQIAYBiGjBBwQFlBhIgJaxGIexDutzgE3sXGDN+BtgWOQFBhsIWAHPoCqAIRMvuSAMokrrvKyjX4WqrfMgJh9pZibWIMZhfcELJY1mybgbkN7b26mzzHyv4DB+gljAOBCDoggeqkp+REbRVurj8s+CIIC2iEPzn1UiwIBRMAnGS/BC8ENdsP7raRncpb3jZkBpEkf6RTnahiC+otahRkHyRqgRiKDZlJCBJBOWzbf2P2DymENpkl94oJKgOPAdEihe6AiKsv+AT1YG42aADZnnFYxvA0E8IKUKaCZeQQ04ASWfA5xDnQGVPDty1UYQyY2woI4MikMRsAYMYBNMKHhF8NIyGFcDfI9FXugQX8EKGIMiOI0zoaKCGEN+VweJolE2RuOUThFxYBziWcSCGAFPEBREURLUWRRFTco8C7yC4ofMfzgtg3PTMhhzA/5zhUwpT+MEm6U/qAWV/LjqQEXQBBQHLhOeMWmmbIBrKkmsSH7NboIEG4INQHzAA7GSZ0qCU0UFEEV8sKHiFZlc6MvLYKwN0CJzvKJ0mlCQMEAlQlVxTkDAxYAqGrmUhkz4sBKPQJTG5ogSNdkoogU/0EODsuCXBK+YsiBIQcEmiG8AyG+/UQNYgwktXrGJ+CwZFwOMzxletmI++AFq6iTOZoKlKZBEEAsahSQNQ3OwSbOm1KuOkUF9Jor0Oy+9ztqjD6dghKVBIN8qVmRGoWII2ixeOcCGMfh1sALW4hw4FGcTTKmCFzQJiyx4eHlaBg9p75gZcN/XpHRYB6caX5HSBBw1ktihKaUJKBitoM2A5kCNxsAw9Z3K8E42N0a4cftL/GDpv2vyF2SIgB88ukp+UajqVaU2d2WxM66ElZhwQhm/1IbaKmqaIJCZkIAEBUwxwIb1/U0xL4OxMmCKcJwXcogJDV55Cs3mNqyC58D6UzHaSX2gh0Z/T7biw1UGU94RD3Jr12rtYzToWpnNfzvd4v7rYI3rypXkK4XqAIVKgXDiZ7DlkCTeStwYRJuAJPjt07DBJry8DMbur8PCAuOB1zYZVUNzWPHC2XiF04mGJ9O/eRO9b22n722nO7by053dHD//er02E/8RSPf3r81dqRf1vc/cnq1s6NtSp2/TJmrv9QB/QlieS0KFem07fvtBeAWD55OVwZgYsErEWI8ua6HYeRR+2xFUDroU1WPoe/NZeja+yM5dv/RWnu7fRteCVXrB6bfoy3xMLLpJn+h9ifn977G8dyuv9b+5g56Xn6a27X3KE5fSMeVLFCfMIijvj+ezvwbMHRMDjrmYw33hs15YpH3qXKw9iOpbT9H9wpp05XuovsvbO9/nst/dwCmLb9HH+D2wq0+cfrP+sL/KiX3drOp/x1V7XnuZbc//kEa1SlA+ivZpJ2EEPMsSPj742P8294vL5avlIvdOmjmD0tTp9G/9L5ojEVGdWn2E2waG+N4F92g/ewCPXCEzbBvXFYosDwIoTZhKefJx7HjxMWo99e2NYY7K3gZ7sgkaQ5cYGHz3LardbxA7tBHxk6jOd8+9W19hD+Ksu/UN4OKHr5QHA5+V9Z3dcwe3/BISg7VMxmce8LM9YkB++pvoV5gTO0hGEpqOJxPl+nPu0vWMIc69QzesElnwuStY1jBc6+OOSACUc/eoAUkbZV8pjDR4HeGmJffyL5qCcUD+t/4f/eRv5FelhCvV8VcInXuuB+Tnf2njeGPZsuR+fYdPEH52qRwBsPQBffVjG7Avw7CP448GsI/j/wFpvaxTrbeulwAAAABJRU5ErkJggg=="/> This is why we need <strong>ports</strong>.</p>
+<ul>
+<li><strong>IP address</strong> → identifies the <strong>host</strong>.</li>
+<li><strong>Port number</strong> → identifies the <strong>application (process)</strong> inside the host.</li>
+</ul>
+<p>Together, <code>(IP, Port)</code> defines a <strong>communication endpoint</strong>.</p>
+<hr/>
+<h2 id="2-udp-user-datagram-protocol">2. UDP: User Datagram Protocol</h2>
+<p>UDP is the <strong>simplest transport protocol</strong>.<br/>
+It simply <strong>adds ports</strong> on top of IP packets.</p>
+<h3 id="udp-header-8-bytes">UDP Header (8 bytes)</h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Size (bits)</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Source Port</td>
+<td>16</td>
+<td>Sender application port</td>
+</tr>
+<tr>
+<td>Destination Port</td>
+<td>16</td>
+<td>Receiver application port</td>
+</tr>
+<tr>
+<td>Length</td>
+<td>16</td>
+<td>Total length (header + data)</td>
+</tr>
+<tr>
+<td>Checksum</td>
+<td>16</td>
+<td>Error detection</td>
+</tr>
+</tbody>
+</table>
+<hr/>
+<h3 id="characteristics-of-udp">Characteristics of UDP</h3>
+<ul>
+<li><strong>Connectionless</strong>: no setup before sending.</li>
+<li><strong>Unreliable</strong>: no retransmission, no acknowledgment.</li>
+<li><strong>No ordering</strong>: packets may arrive out of order.</li>
+<li><strong>Lightweight</strong>: very small header, fast.</li>
+</ul>
+<h3 id="example-uses">Example Uses</h3>
+<ul>
+<li>DNS queries (<code>port 53</code>)</li>
+<li>Video/audio streaming</li>
+<li>Online games</li>
+</ul>
+<hr/>
+<h2 id="3-limitations-of-ip-and-udp">3. Limitations of IP and UDP</h2>
+<ul>
+<li>IP provides only <strong>host-to-host</strong> delivery.</li>
+<li>UDP adds <strong>port-to-port</strong> delivery, but…
+<ul>
+<li>Still <strong>unreliable</strong> (packets may be lost).</li>
+<li>No guarantee of order.</li>
+<li>No congestion or flow control.</li>
+</ul>
+</li>
+</ul>
+<p><img alt="question" class="emoji" src="data:image/png;base64,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"/> <strong>What if we want to send a file and ensure every byte arrives in order?</strong></p>
+<p><img alt="star" class="emoji" src="data:image/png;base64,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"/> This motivates the design of <strong>TCP</strong>.</p>
+<hr/>
+<h2 id="4-tcp-transmission-control-protocol">4. TCP: Transmission Control Protocol</h2>
+<p>TCP solves the reliability problem of IP/UDP by adding mechanisms for:</p>
+<ul>
+<li><strong>Connection establishment</strong> (handshake).</li>
+<li><strong>Reliable delivery</strong> (ACKs, retransmissions).</li>
+<li><strong>In-order delivery</strong> (sequence numbers).</li>
+<li><strong>Flow control</strong> (window size).</li>
+<li><strong>Congestion control</strong> (adapts to network load).</li>
+</ul>
+<hr/>
+<h3 id="tcp-header-minimum-20-bytes">TCP Header (minimum 20 bytes)</h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Size (bits)</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Source Port</td>
+<td>16</td>
+<td>Application port</td>
+</tr>
+<tr>
+<td>Destination Port</td>
+<td>16</td>
+<td>Application port</td>
+</tr>
+<tr>
+<td>Sequence Number</td>
+<td>32</td>
+<td>Position of first byte in this segment</td>
+</tr>
+<tr>
+<td>Acknowledgment #</td>
+<td>32</td>
+<td>Next byte expected</td>
+</tr>
+<tr>
+<td>Flags (SYN, ACK, FIN, etc.)</td>
+<td>9</td>
+<td>Connection control</td>
+</tr>
+<tr>
+<td>Window Size</td>
+<td>16</td>
+<td>Flow control</td>
+</tr>
+<tr>
+<td>Checksum</td>
+<td>16</td>
+<td>Error detection</td>
+</tr>
+</tbody>
+</table>
+<hr/>
+<h3 id="tcp-connection-establishment-3-way-handshake">TCP Connection Establishment: 3-Way Handshake</h3>
+<pre><code class="language-mermaid"><div class="mermaid">sequenceDiagram
+    participant C as Client
+    participant S as Server
+
+    C-&gt;&gt;S: SYN (Seq = x)
+    S-&gt;&gt;C: SYN-ACK (Seq = y, Ack = x+1)
+    C-&gt;&gt;S: ACK (Ack = y+1)
+</div></code></pre>
+<ul>
+<li>Client requests a connection (<strong>SYN</strong>).</li>
+<li>Server accepts (<strong>SYN-ACK</strong>).</li>
+<li>Client confirms (<strong>ACK</strong>).</li>
+<li>Connection established.</li>
+</ul>
+<hr/>
+<h3 id="tcp-reliability">TCP Reliability</h3>
+<ol>
+<li>Sender transmits data with a <strong>sequence number</strong>.</li>
+<li>Receiver acknowledges with an <strong>ACK number</strong>.</li>
+<li>If lost, sender retransmits.</li>
+</ol>
+<p>TCP also ensures <strong>ordering</strong> — data arrives to the application in the correct sequence.</p>
+<hr/>
+<h2 id="5-comparing-udp-and-tcp">5. Comparing UDP and TCP</h2>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>UDP (Simple)</th>
+<th>TCP (Reliable)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Based on IP</td>
+<td>Adds only ports</td>
+<td>Adds ports + reliability</td>
+</tr>
+<tr>
+<td>Connection</td>
+<td>None (stateless)</td>
+<td>3-way handshake (stateful)</td>
+</tr>
+<tr>
+<td>Reliability</td>
+<td>None</td>
+<td>Guaranteed (ACK + retransmit)</td>
+</tr>
+<tr>
+<td>Ordering</td>
+<td>None</td>
+<td>In-order delivery</td>
+</tr>
+<tr>
+<td>Speed</td>
+<td>Fast, minimal overhead</td>
+<td>Slower due to overhead</td>
+</tr>
+<tr>
+<td>Use Cases</td>
+<td>DNS, streaming, gaming</td>
+<td>Web, email, file transfer</td>
+</tr>
+</tbody>
+</table>
+<hr/>
+<h2 id="%F0%9F%94%8E-checking-ports-in-linux">🔎 Checking Ports in Linux</h2>
+<p>To see which <strong>ports</strong> are associated with which <strong>processes/applications</strong>, we can use:</p>
+<h3 id="netstat-older-but-widely-used"><code>netstat</code> (older, but widely used)</h3>
+<pre class="hljs"><code><div>netstat -tulnp
+</div></code></pre>
+<ul>
+<li><code>-t</code> → TCP</li>
+<li><code>-u</code> → UDP</li>
+<li><code>-l</code> → Listening ports</li>
+<li><code>-n</code> → Show numbers (not names)</li>
+<li><code>-p</code> → Show process using the port</li>
+</ul>
+<p><strong>Example Output:</strong></p>
+<pre class="hljs"><code><div>Proto Recv-Q Send-Q Local Address    Foreign Address   State   PID/Program name
+tcp        0      0 0.0.0.0:22       0.0.0.0:*         LISTEN  1234/sshd
+udp        0      0 127.0.0.1:53     0.0.0.0:*                 5678/dnsmasq
+</div></code></pre>
+<h3 id="ss-modern-replacement-for-netstat"><code>ss</code> (modern replacement for netstat)</h3>
+<pre class="hljs"><code><div>ss -tulnp
+</div></code></pre>
+<h3 id="lsof-list-open-files-including-network-sockets"><code>lsof</code> (list open files, including network sockets)</h3>
+<pre class="hljs"><code><div>sudo lsof -i -P -n
+</div></code></pre>
+<p><img alt="star" class="emoji" src="data:image/png;base64,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"/> These commands let you map <strong>ports → processes</strong>, which makes the abstract concept of “ports identify applications” concrete on a real system.</p>
+<hr/>
+<h2 id="6-summary">6. Summary</h2>
+<ul>
+<li><strong>IP</strong>: host-to-host delivery.</li>
+<li><strong>UDP</strong>: adds ports → process-to-process delivery, but still unreliable.</li>
+<li><strong>TCP</strong>: builds reliability on top of IP/UDP with handshake, ACKs, sequence numbers, flow &amp; congestion control.</li>
+<li>Choice depends on the application:
+<ul>
+<li><strong>UDP</strong> for speed (streaming, gaming).</li>
+<li><strong>TCP</strong> for reliability (web, email, file transfer).</li>
+</ul>
+</li>
+</ul>
+</div></body>
+</html>
